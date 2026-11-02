@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login / Register – CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Assets/css/login.css">
+</head>
+<body>
+
+<header class="nav-wrap">
+  <div class="container navbar">
+    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="HomePage.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="support.html">Support</a>
+    </nav>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false"
+            aria-controls="mainNav" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main class="container auth-main">
+  <section class="auth-shell" aria-labelledby="authTitle">
+
+    <div class="role-tabs" aria-label="Choose role">
+      <button type="button" class="role-tab active" data-role="client">Client</button>
+      <button type="button" class="role-tab" data-role="staff">Staff</button>
+    </div>
+
+    <div class="card auth-card">
+      <div id="loginPanel">
+        <h1 id="authTitle">Client Login</h1>
+        <p class="lead">Access the Courier Management System.</p>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" type="email" autocomplete="email"
+                   placeholder="email@example.com" required>
+          </div>
+
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" autocomplete="current-password"
+                   placeholder="Password" minlength="6" required>
+          </div>
+
+          <button class="btn btn-primary btn-full" type="submit">Login</button>
+          <p class="msg" id="loginMsg" role="alert" aria-live="polite"></p>
+        </form>
+
+        <div class="switch-row">
+          <span>Don't have an account yet?</span>
+          <button class="btn btn-light" type="button" id="showRegister">Register here</button>
+        </div>
+      </div>
+
+      <div id="registerPanel" hidden>
+        <h1>Create Client Account</h1>
+        <p class="lead">Sprint 1 frontend registration prototype.</p>
+
+        <form id="registerForm" novalidate>
+          <div class="field">
+            <label for="registerName">Name</label>
+            <input id="registerName" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="field">
+            <label for="registerEmail">Email</label>
+            <input id="registerEmail" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="registerPhone">Phone</label>
+            <input id="registerPhone" type="tel" autocomplete="tel" required>
+          </div>
+
+          <div class="field">
+            <label for="registerNif">NIF</label>
+            <input id="registerNif" type="text" inputmode="numeric"
+                   pattern="[0-9]{9}" maxlength="9" required>
+          </div>
+
+          <div class="field">
+            <label for="registerPassword">Password</label>
+            <input id="registerPassword" type="password" minlength="6"
+                   autocomplete="new-password" required>
+          </div>
+
+          <button class="btn btn-primary btn-full" type="submit">Register</button>
+          <p class="msg" id="registerMsg" role="alert" aria-live="polite"></p>
+        </form>
+
+        <div class="switch-row">
+          <span>Already have an account?</span>
+          <button class="btn btn-light" type="button" id="showLogin">Back to login</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© 2026 CMS – Courier Management System</span>
+    <nav aria-label="Footer">
+      <a href="HomePage.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="TeamPage.html">Team</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../Assets/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Page – CMS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="../Assets/css/client.css">
+</head>
+<body>
+
+<header class="nav-wrap">
+  <div class="container navbar">
+    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="HomePage.html">Home</a>
+      <a href="client.html" class="active">Client</a>
+      <a href="services.html">Our Services</a>
+      <a href="support.html">Support</a>
+    </nav>
+
+    <div class="user">
+      <div class="user-text">
+        <strong>Hello Ricardo!</strong>
+        <span>Client</span>
+      </div>
+      <span class="avatar" aria-hidden="true">R</span>
+      <a class="logout" href="login.html">Logout</a>
+    </div>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false"
+            aria-controls="mainNav" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+  <h1 class="sr-only">Client order page</h1>
+
+  <section class="client-grid" aria-label="Create a new order">
+    <div class="card form-card">
+      <h2>New order submission</h2>
+
+      <form id="orderForm" novalidate>
+        <h3>Origin</h3>
+        <div class="coord-grid">
+          <div class="field">
+            <label for="originLat">Latitude</label>
+            <input id="originLat" type="number" step="any" value="41.1780" required>
+          </div>
+          <div class="field">
+            <label for="originLng">Longitude</label>
+            <input id="originLng" type="number" step="any" value="-8.5980" required>
+          </div>
+        </div>
+
+        <h3>Destination</h3>
+        <div class="coord-grid">
+          <div class="field">
+            <label for="destLat">Latitude</label>
+            <input id="destLat" type="number" step="any" value="41.1497" required>
+          </div>
+          <div class="field">
+            <label for="destLng">Longitude</label>
+            <input id="destLng" type="number" step="any" value="-8.6109" required>
+          </div>
+        </div>
+
+        <h3>Parcel details</h3>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea id="description" placeholder="e.g. Books and documents" required></textarea>
+        </div>
+
+        <div class="two-cols">
+          <div class="field">
+            <label for="category">Category</label>
+            <input id="category" type="text" placeholder="Documents" required>
+          </div>
+
+          <div class="field">
+            <label for="weight">Weight (kg)</label>
+            <input id="weight" type="number" min="0.01" step="0.01" placeholder="2.50" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="volume">Volume (m³)</label>
+          <input id="volume" type="number" min="0.001" step="0.001"
+                 placeholder="0.020" required>
+        </div>
+
+        <button class="btn btn-primary btn-full" type="submit">Submit Order</button>
+        <p class="msg" id="orderMsg" role="alert" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="card map-card">
+      <div id="map" role="region" aria-label="Origin and destination map"></div>
+      <div class="map-info">
+        <span>Origin: <b id="originText">—</b></span>
+        <span>Destination: <b id="destText">—</b></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="status-section" aria-labelledby="statusTitle">
+    <h2 id="statusTitle">Order Status</h2>
+
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Origin</th>
+              <th>Destination</th>
+              <th>Product</th>
+              <th>Courier</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr>
+              <td>#2041</td>
+              <td>FEUP</td>
+              <td>Porto Centre</td>
+              <td>Documents</td>
+              <td>Courier 07</td>
+              <td><span class="status status-progress">In Progress</span></td>
+            </tr>
+            <tr>
+              <td>#2040</td>
+              <td>Boavista</td>
+              <td>Campanhã</td>
+              <td>Books</td>
+              <td>Courier 12</td>
+              <td><span class="status status-completed">Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© 2026 CMS – Courier Management System</span>
+    <nav aria-label="Footer">
+      <a href="HomePage.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="TeamPage.html">Team</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../Assets/js/client.js"></script>
+</body>
+</html>
