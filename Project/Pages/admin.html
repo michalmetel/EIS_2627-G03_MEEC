@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel – CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<header class="nav-wrap">
+  <div class="container navbar">
+    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="HomePage.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <div class="user">
+      <div class="user-text"><strong id="greeting">Hello Ricardo!</strong><span>Admin</span></div>
+      <button class="avatar" id="profileBtn" type="button"
+              aria-label="Edit personal information" title="Edit personal information">
+        <span id="avatarInitial">R</span>
+      </button>
+      <a class="logout" href="login.html">Logout</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main class="container">
+  <h1 class="sr-only">Admin panel</h1>
+
+  <!-- ============ KPI DASHBOARD ============ -->
+  <section aria-labelledby="kpiTitle">
+    <h2 class="section-title" id="kpiTitle">Operational Dashboard</h2>
+
+    <div class="dashboard">
+
+      <!-- Column 1 -->
+      <div class="col">
+        <article class="card kpi" aria-labelledby="usersTitle">
+          <h3 id="usersTitle">Total Users</h3>
+          <p class="big-row">
+            <span class="big" id="totalUsers">0</span>
+            <span class="delta" id="usersDelta">+0,0%</span>
+            <span class="muted">vs last month</span>
+          </p>
+          <p class="sub">
+            Clients: <b id="clientsCount">0</b> |
+            Couriers: <b id="couriersCount">0</b> |
+            Staff: <b id="staffCount">0</b>
+          </p>
+        </article>
+
+        <article class="card kpi" aria-labelledby="tripsTitle">
+          <h3 id="tripsTitle">Trips &amp; Completed Orders</h3>
+          <div class="chart" id="tripsChart"></div>
+          <ul class="legend" aria-hidden="true">
+            <li><span class="legend-mark legend-request"></span>Request</li>
+            <li><span class="legend-mark legend-completed"></span>Completed</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="col">
+        <article class="card kpi" aria-labelledby="routesTitle">
+          <h3 id="routesTitle">Target Routes</h3>
+          <div class="donut" role="img" id="routesDonut" aria-label="Target routes completed">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="donut-track" cx="60" cy="60" r="52"/>
+              <circle class="donut-value" id="donutValue" cx="60" cy="60" r="52"/>
+            </svg>
+            <p class="donut-label"><span id="donutPct">0%</span><span>Completed</span></p>
+          </div>
+        </article>
+
+        <article class="card kpi" aria-labelledby="fleetTitle">
+          <h3 id="fleetTitle">Orders &amp; Vehicles</h3>
+          <ul class="stat-list">
+            <li>Active orders: <b id="activeOrders">0</b></li>
+            <li>Active vehicles: <b id="activeVehicles">0</b></li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="col">
+        <article class="card kpi" aria-labelledby="satTitle">
+          <h3 id="satTitle">Customer satisfaction</h3>
+          <p class="big-row">
+            <span class="big" id="ratingValue">0.0</span>
+            <span class="stars" id="ratingStars" role="img" aria-label="Rating">
+              <span class="stars-base" aria-hidden="true">★★★★★</span>
+              <span class="stars-fill" id="starsFill" aria-hidden="true">★★★★★</span>
+            </span>
+          </p>
+          <p class="sub"><span id="positiveFeedback">0</span>% positive feedback</p>
+        </article>
+
+        <article class="card kpi" aria-labelledby="taskTitle">
+          <h3 id="taskTitle">Task progress</h3>
+          <p class="big-row">
+            <span class="big" id="taskPct">0%</span>
+            <span class="muted">Completed</span>
+          </p>
+          <div class="progress" role="progressbar" aria-labelledby="taskTitle"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="taskBar">
+            <div class="progress-fill" id="taskFill"></div>
+          </div>
+          <p class="sub strong" id="deliveriesText">0/0 Deliveries on route</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PENDING APPROVALS ============ -->
+  <section aria-labelledby="approvalsTitle" id="approvals">
+    <div class="title-row">
+      <h2 class="section-title" id="approvalsTitle">Pending Approvals: Staff</h2>
+      <span class="count-chip" id="pendingCount">0 pending</span>
+    </div>
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role Requested</th>
+              <th>Date Received</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="approvalsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© 2026 CMS – Courier Management System</span>
+    <nav aria-label="Footer"><a href="HomePage.html">Home</a><a href="support.html">Support</a><a href="TeamPage.html">Team</a></nav>
+  </div>
+</footer>
+
+<!-- ============ EDIT PERSONAL INFORMATION ============ -->
+<dialog class="dialog" id="profileDialog" aria-labelledby="profileTitle">
+  <form id="profileForm" novalidate>
+    <div class="dialog-head">
+      <h2 id="profileTitle">Edit personal information</h2>
+      <button type="button" class="icon-btn" data-close aria-label="Close dialog">&times;</button>
+    </div>
+
+    <div class="form-alert" id="formAlert" role="alert" hidden></div>
+
+    <div class="field">
+      <label for="pfName">Full name</label>
+      <input id="pfName" name="name" type="text" autocomplete="name" required>
+      <p class="error" id="pfNameError"></p>
+    </div>
+
+    <div class="field">
+      <label for="pfEmail">Institutional email</label>
+      <input id="pfEmail" name="email" type="email" autocomplete="email" required>
+      <p class="error" id="pfEmailError"></p>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="pfPhone">Phone</label>
+        <input id="pfPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="912 345 678" required>
+        <p class="error" id="pfPhoneError"></p>
+      </div>
+      <div class="field">
+        <label for="pfNif">NIF</label>
+        <input id="pfNif" name="nif" type="text" inputmode="numeric" maxlength="9" placeholder="9 digits" required>
+        <p class="error" id="pfNifError"></p>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="pfPassword">New password <span class="optional">(optional)</span></label>
+        <input id="pfPassword" name="password" type="password" autocomplete="new-password">
+        <p class="error" id="pfPasswordError"></p>
+      </div>
+      <div class="field">
+        <label for="pfConfirm">Confirm password</label>
+        <input id="pfConfirm" name="confirm" type="password" autocomplete="new-password">
+        <p class="error" id="pfConfirmError"></p>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button type="submit" class="btn">Save changes</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
