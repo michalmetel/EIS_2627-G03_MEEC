@@ -1,13 +1,7 @@
 /* =========================================================
    CMS – Courier Management System
-   admin.js: behaviour for admin.html (admin panel).
+   admin.js: behaviour for admin.html
    Data below is sample data; replace with an API call later.
-   Sections:
-     1. Sample data
-     2. Helpers (DOM, storage, toast, mobile menu)
-     3. KPI rendering (counters, donut, stars, progress, chart)
-     4. Pending approvals
-     5. Edit personal information (form + validation)
    ========================================================= */
 
 'use strict';

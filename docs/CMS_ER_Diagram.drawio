@@ -1,0 +1,389 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="CMS ER Model" id="cms-er">
+    <mxGraphModel dx="4233" dy="2338" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#FFFFFF,#121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="USER" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#1f4e79;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="USER" vertex="1">
+          <mxGeometry height="294" width="360" x="250" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.0" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;user_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.1" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;username&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR, UNIQUE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.2" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;password_hash&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.3" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;email&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR, UNIQUE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.4" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;name&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.5" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;phone&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.6" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;nif&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;CHAR(9)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.7" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;role&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(client,courier,staff,admin)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.8" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;account_status&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(pending,approved,rejected,suspended)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.9" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;approved_by&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT, NULL → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="228" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.10" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;approved_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="USER.11" parent="USER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;created_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE_TYPE" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#2e7d32;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="VEHICLE_TYPE" vertex="1">
+          <mxGeometry height="74" width="360" x="2010" y="174" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE_TYPE.0" parent="VEHICLE_TYPE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;vehicle_type_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE_TYPE.1" parent="VEHICLE_TYPE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;type_name&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(Bike,Moto,Van,Truck)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#2e7d32;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="VEHICLE" vertex="1">
+          <mxGeometry height="338" width="360" x="1500" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.0" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;vehicle_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.1" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;courier_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.2" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;vehicle_type_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → VEHICLE_TYPE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.3" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;license_plate&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR, UNIQUE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.4" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;model&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.5" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;max_weight_kg&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.6" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;max_vol_m3&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.7" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;insurance_expiry_date&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.8" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;inspection_expiry_date&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.9" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;insurance_expiry_doc&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR (file path)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="228" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.10" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;inspection_expiry_doc&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR (file path)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.11" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;approval_status&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(pending,approved,rejected)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.12" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;approved_by&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT, NULL → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="294" as="geometry" />
+        </mxCell>
+        <mxCell id="VEHICLE.13" parent="VEHICLE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;created_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="316" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#b26a00;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="PRODUCT" vertex="1">
+          <mxGeometry height="184" width="360" x="-630" y="82" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.0" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;product_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.1" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;client_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.2" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;description&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.3" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;category&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.4" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;weight_kg&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.5" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;volume_m3&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="PRODUCT.6" parent="PRODUCT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;created_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#b26a00;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="ORDER" vertex="1">
+          <mxGeometry height="228" width="360" x="-30" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.0" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;order_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.1" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;client_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.2" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;origin_lat&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL(9,6)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.3" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;origin_long&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL(9,6)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.4" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;dest_lat&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL(9,6)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.5" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;dest_long&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL(9,6)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.6" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;status&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(initiated,in_progress,completed,cancelled)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.7" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;attempt&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT (default 1)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER.8" parent="ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;created_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_ITEM" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#b26a00;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="ORDER_ITEM" vertex="1">
+          <mxGeometry height="96" width="360" x="-630" y="836" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_ITEM.0" parent="ORDER_ITEM" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK,FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;order_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ORDER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_ITEM.1" parent="ORDER_ITEM" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK,FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;product_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → PRODUCT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_ITEM.2" parent="ORDER_ITEM" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;quantity&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#7b1fa2;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="ROUTE" vertex="1">
+          <mxGeometry height="184" width="360" x="590" y="559" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.0" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;route_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.1" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;courier_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.2" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;vehicle_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → VEHICLE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.3" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;status&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(initiated,in_progress,completed,cancelled)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.4" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;created_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.5" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;started_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE.6" parent="ROUTE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;finished_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#7b1fa2;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="ROUTE_ORDER" vertex="1">
+          <mxGeometry height="162" width="360" x="590" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER.0" parent="ROUTE_ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK,FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;route_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ROUTE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER.1" parent="ROUTE_ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK,FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;order_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ORDER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER.2" parent="ROUTE_ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;stop_sequence&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER.3" parent="ROUTE_ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;assigned_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER.4" parent="ROUTE_ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;picked_up_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="ROUTE_ORDER.5" parent="ROUTE_ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;delivered_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#7b1fa2;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="PROOF_OF_DELIVERY" vertex="1">
+          <mxGeometry height="184" width="360" x="590" y="1090" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.0" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;pod_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.1" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;route_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ROUTE_ORDER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.2" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;order_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ROUTE_ORDER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.3" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;pod_type&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(signature,photo)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.4" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;received_by_name&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.5" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;file_path&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="PROOF_OF_DELIVERY.6" parent="PROOF_OF_DELIVERY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;submitted_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#555555;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="ORDER_STATUS_HISTORY" vertex="1">
+          <mxGeometry height="162" width="360" x="-30" y="-222" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY.0" parent="ORDER_STATUS_HISTORY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;history_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY.1" parent="ORDER_STATUS_HISTORY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;order_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ORDER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY.2" parent="ORDER_STATUS_HISTORY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;changed_by&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY.3" parent="ORDER_STATUS_HISTORY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;old_status&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY.4" parent="ORDER_STATUS_HISTORY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;new_status&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="ORDER_STATUS_HISTORY.5" parent="ORDER_STATUS_HISTORY" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;changed_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#c62828;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="NOTIFICATION" vertex="1">
+          <mxGeometry height="243" width="360" x="1500" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.0" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;notification_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.1" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;recipient_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.2" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;vehicle_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT, NULL → VEHICLE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.3" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;resolved_by&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT, NULL → USER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.4" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;type&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;ENUM(doc_uploaded,doc_expired,vehicle_issue,approval_request)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.5" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;message&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;VARCHAR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.6" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;is_read&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;BOOLEAN&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.7" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;created_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="NOTIFICATION.8" parent="NOTIFICATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;resolved_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME, NULL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="rel0" edge="1" parent="1" source="USER.11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="ORDER" value="places (client)">
+          <mxGeometry relative="1" x="-0.1415" as="geometry" />
+        </mxCell>
+        <mxCell id="rel1" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="PRODUCT" value="registers (client)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel2" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=1;exitY=0.2;entryX=0;entryY=0.15;" target="VEHICLE" value="owns (courier)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel3" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERzeroToOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=1;exitY=0.45;entryX=0;entryY=0.35;" target="VEHICLE" value="approves (staff)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel4" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERzeroToOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.853;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="USER" value="validates account (staff→courier; admin→client, courier, staff)">
+          <mxGeometry relative="1" x="0.0867" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="-121.6" />
+              <mxPoint x="790" y="-121.6" />
+              <mxPoint x="790" y="-82" />
+              <mxPoint x="557.1" y="-82" />
+            </Array>
+            <mxPoint x="520" y="-121.6" as="sourcePoint" />
+            <mxPoint x="520" y="-82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel5" edge="1" parent="1" source="VEHICLE_TYPE" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="VEHICLE" value="classifies">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel6" edge="1" parent="1" source="ORDER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERoneToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="ORDER_ITEM" value="contains">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel7" edge="1" parent="1" source="PRODUCT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="ORDER_ITEM" value="included in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel8" edge="1" parent="1" source="USER.11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="ROUTE" value="drives (courier)">
+          <mxGeometry relative="1" x="0.0025" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="430" />
+              <mxPoint x="680" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel9" edge="1" parent="1" source="VEHICLE" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="ROUTE" value="used in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel10" edge="1" parent="1" source="ROUTE" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERoneToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="ROUTE_ORDER" value="consolidates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel11" edge="1" parent="1" source="ORDER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="ROUTE_ORDER" value="assigned via">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel12" edge="1" parent="1" source="ROUTE_ORDER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToOne;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="PROOF_OF_DELIVERY" value="confirmed by">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel13" edge="1" parent="1" source="ORDER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERoneToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" target="ORDER_STATUS_HISTORY.5" value="logs">
+          <mxGeometry relative="1" x="-0.0978" as="geometry" />
+        </mxCell>
+        <mxCell id="rel14" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="ORDER_STATUS_HISTORY" value="changed by">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel15" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=1;exitY=0.75;entryX=0;entryY=0.15;" target="NOTIFICATION" value="receives">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1400" y="250.5" />
+              <mxPoint x="1400" y="496.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel16" edge="1" parent="1" source="USER" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERzeroToOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;exitX=1;exitY=0.9;entryX=0;entryY=0.3;" target="NOTIFICATION" value="fixes / resolves (staff)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel17" edge="1" parent="1" source="ROUTE" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERmandOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="TRACKING_POINT" value="GPS tracked">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel18" edge="1" parent="1" source="VEHICLE" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;startArrow=ERzeroToOne;endArrow=ERzeroToMany;startFill=0;endFill=0;startSize=14;endSize=14;strokeColor=#444444;fontSize=11;fontStyle=2;labelBackgroundColor=#ffffff;" target="NOTIFICATION" value="about">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;strokeColor=#999999;fillColor=#ffffff;spacing=8;fontSize=11;" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;PK = primary key · FK = foreign key (NULL = optional)&lt;br&gt;Crow&#39;s-foot: exactly one | zero or one | one or many | zero or many&lt;br&gt;&lt;font color=&quot;#1f4e79&quot;&gt;■&lt;/font&gt; Users  &lt;font color=&quot;#2e7d32&quot;&gt;■&lt;/font&gt; Fleet  &lt;font color=&quot;#b26a00&quot;&gt;■&lt;/font&gt; Orders  &lt;font color=&quot;#7b1fa2&quot;&gt;■&lt;/font&gt; Routing  &lt;font color=&quot;#c62828&quot;&gt;■&lt;/font&gt; Alerts  &lt;font color=&quot;#00838f&quot;&gt;■&lt;/font&gt; GPS" vertex="1">
+          <mxGeometry height="110" width="360" x="1320" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=top;" value="&lt;b style=&quot;font-size:20px&quot;&gt;Courier Management System (CMS) — Conceptual ER Model&lt;/b&gt;&lt;br&gt;Enterprise Information Systems · FEUP · Sprint 1" vertex="1">
+          <mxGeometry height="50" width="700" x="470" y="-272" as="geometry" />
+        </mxCell>
+        <mxCell id="TRACKING_POINT" parent="1" style="swimlane;fontStyle=1;fontSize=14;align=center;startSize=30;horizontal=1;collapsible=0;marginBottom=0;fillColor=#00838f;strokeColor=#333333;fontColor=#ffffff;swimlaneFillColor=#ffffff;rounded=0;" value="TRACKING_POINT" vertex="1">
+          <mxGeometry height="140" width="360" x="1090" y="581" as="geometry" />
+        </mxCell>
+        <mxCell id="TRACKING_POINT.0" parent="TRACKING_POINT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;PK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;&lt;u&gt;tracking_id&lt;/u&gt;&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TRACKING_POINT.1" parent="TRACKING_POINT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&lt;b&gt;&lt;font color=&quot;#8a1c1c&quot;&gt;FK&lt;/font&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;route_id&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;INT → ROUTE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="TRACKING_POINT.2" parent="TRACKING_POINT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;latitude&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL(9,6)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="TRACKING_POINT.3" parent="TRACKING_POINT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;longitude&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DECIMAL(9,6)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="TRACKING_POINT.4" parent="TRACKING_POINT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;fontSize=11;portConstraint=eastwest;" value="&amp;nbsp;&amp;nbsp;recorded_at&amp;nbsp;&amp;nbsp;&lt;font color=&quot;#777777&quot; style=&quot;font-size:10px&quot;&gt;DATETIME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="22" width="360" y="118" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

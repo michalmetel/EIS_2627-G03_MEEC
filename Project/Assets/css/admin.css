@@ -1,9 +1,7 @@
 /* =========================================================
    CMS – Courier Management System
-   admin.css: all styles for admin.html (admin panel).
+   admin.css: all styles for admin.html
    Variables, header, footer, cards, tables, buttons and toast
-   follow staff.css / courier.css so the pages look the same.
-   (Shared parts can move to a common.css later.)
    ========================================================= */
 
 :root {
