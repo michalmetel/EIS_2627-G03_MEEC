@@ -33,9 +33,10 @@ h1 {
     text-align: center;
 }
 
-/* frame for the photo (or the empty icon) */
+/* frame for the photo (or the empty icon)
+   4:5 portrait - most photos are portrait, landscape ones get cropped on the sides */
 .photo {
-    height: 150px;
+    aspect-ratio: 4 / 5;
     background-color: rgba(70, 100, 145, 0.35);
     border-radius: 4px;
     display: flex;
@@ -58,7 +59,7 @@ h1 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 5%;
+    object-position: center top;  /* keep heads, crop from the bottom */
 }
 
 /* name */
@@ -85,5 +86,6 @@ h1 {
 
     .team {
         grid-template-columns: 1fr;
+        max-width: 280px;  /* otherwise one photo fills the whole phone screen */
     }
 }
