@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team</title>
+    <title>Team – CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Assets/css/team.css">
 </head>
 <body>
 
-    <h1>Team G03</h1>
+<header class="nav-wrap">
+  <div class="container navbar">
+    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="HomePage.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main class="container">
+
+
+    <h1 class="section-title">Team G03</h1>
 
     <div class="team">
 
-        <div class="card">
+        <div class="member">
             <div class="photo">
                 <img src="../Assets/images/teampage/michal_metel.jpeg" alt="Michał Mętel">
             </div>
@@ -23,7 +42,7 @@
             <!-- <p>Position</p> -->
         </div>
 
-        <div class="card">
+        <div class="member">
             <div class="photo">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
             </div>
@@ -34,7 +53,7 @@
             <!-- <p>Position</p> -->
         </div>
 
-        <div class="card">
+        <div class="member">
             <div class="photo">
                 <img src="../Assets/images/teampage/Aaron.JPG" alt="Aaron Mayal">
             </div>
@@ -45,7 +64,7 @@
             <!-- <p>Position</p> -->
         </div>
 
-        <div class="card">
+        <div class="member">
             <div class="photo">
                 <img src="../Assets/images/teampage/Alex_Gorra.jpeg" alt="Alexandre Gorra">
             </div>
@@ -56,7 +75,7 @@
             <!-- <p>Position</p> -->
         </div>
 
-        <div class="card">
+        <div class="member">
             <div class="photo">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
             </div>
@@ -67,7 +86,7 @@
             <!-- <p>Position</p> -->
         </div>
 
-        <div class="card">
+        <div class="member">
             <div class="photo">
                 <img src="../Assets/images/teampage/diogo.jpg" alt="Diogo Pinto">
             </div>
@@ -80,5 +99,19 @@
 
     </div>
 
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© 2026 CMS – Courier Management System</span>
+    <nav aria-label="Footer">
+      <a href="HomePage.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="TeamPage.html">Team</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../Assets/js/team.js"></script>
 </body>
 </html>

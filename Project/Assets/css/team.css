@@ -1,91 +1,176 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================================================
+   team.css - styles for TeamPage.html
+   Part 1 (variables, header, footer) is the same as in
+   login.css / staff.css / client.css, so all pages look alike.
+   Part 2 is only for the team page.
+   ========================================================= */
+
+/* ---------- PART 1: shared with other pages ---------- */
+
+/* colours used on every page */
+:root {
+  --navy: #14284b;
+  --blue: #2f5d9e;
+  --ink: #1b2437;
+  --muted: #5b667b;
+  --line: #dbe2ee;
+  --photo-bg: rgba(70, 100, 145, 0.35);
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* blue gradient behind the whole page */
+html {
+  min-height: 100%;
+  background: linear-gradient(135deg, #dde9f6 0%, #b4c9e4 40%, #7e9cc9 75%, #5c7db3 100%);
+}
+
+/* column layout keeps the footer at the bottom */
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #2c4060;
-    min-height: 100vh;
-    padding: 30px;
-    background: linear-gradient(135deg, #d6f0fa, #a9c4e4, #6584ba);
+  font-family: "Mulish", "Segoe UI", system-ui, Arial, sans-serif;
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-h1 {
-    text-align: center;
-    font-weight: bold;
-    font-size: 22px;
-    margin-bottom: 25px;
+main { flex: 1; }
+a { color: inherit; text-decoration: none; }
+
+/* centred content, max 1120px wide */
+.container { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+/* header: white bar that stays on top when scrolling */
+.nav-wrap {
+  position: sticky; top: 0; z-index: 1000;
+  background: #fff; border-bottom: 1px solid var(--line);
 }
 
-/* grid of cards: 3 in a row */
+.navbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; min-height: 76px;
+}
+
+.logo {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 74px; height: 54px;
+  border: 1.5px solid var(--blue); border-radius: 50%;
+  font-size: .6rem; color: #7b5ea7;
+}
+
+.main-nav {
+  display: flex; gap: clamp(18px, 5vw, 64px);
+  flex: 1; justify-content: center;
+}
+
+.main-nav a {
+  font-weight: 800; color: var(--blue);
+  padding: 8px 2px; border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover, .main-nav a.active {
+  color: var(--navy); border-color: var(--navy);
+}
+
+/* hamburger button, visible only on small screens */
+.menu-toggle {
+  display: none; background: none; border: 0; cursor: pointer;
+  padding: 8px; margin-left: auto;
+}
+
+.menu-toggle span {
+  display: block; width: 24px; height: 3px; margin: 4px 0;
+  background: var(--navy); border-radius: 2px;
+}
+
+/* footer: dark bar at the bottom */
+.footer { background: var(--navy); color: rgba(255,255,255,.78); margin-top: 54px; }
+
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; padding: 22px 0; font-size: .85rem;
+}
+
+.footer-inner nav { display: flex; gap: 20px; }
+.footer a:hover { color: #fff; text-decoration: underline; }
+
+/* tablet and phone: links go under the logo, opened by the hamburger */
+@media (max-width: 960px) {
+  .menu-toggle { display: block; }
+  .navbar { flex-wrap: wrap; padding: 12px 0; }
+  .main-nav { display: none; order: 3; width: 100%; flex-direction: column; gap: 2px; }
+  .main-nav.open { display: flex; }   /* team.js adds "open" */
+  .main-nav a { padding: 12px 4px; }
+}
+
+
+/* ---------- PART 2: team page only ---------- */
+
+main { padding: 32px 0 56px; }
+
+/* same as .section-title on other pages */
+.section-title {
+  font-size: 1.5rem; font-weight: 800; color: var(--navy);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* grid of members: 3 in a row */
 .team {
-    max-width: 700px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 15px;
-    row-gap: 40px;
+  max-width: 700px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 15px;
+  row-gap: 40px;
 }
 
-.card {
-    text-align: center;
-}
+.member { text-align: center; }
 
 /* frame for the photo (or the empty icon)
    4:5 portrait - most photos are portrait, landscape ones get cropped on the sides */
 .photo {
-    aspect-ratio: 4 / 5;
-    background-color: rgba(70, 100, 145, 0.35);
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background-color: var(--photo-bg);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 /* empty person icon */
 .photo svg {
-    width: 40px;
-    height: 40px;
-    fill: none;
-    stroke: white;
-    stroke-width: 2;
+  width: 40px; height: 40px;
+  fill: none; stroke: white; stroke-width: 2;
 }
 
-/* real photo fills the whole frame, face stays visible */
+/* real photo fills the whole frame */
 .photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;  /* keep heads, crop from the bottom */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;  /* keep heads, crop from the bottom */
 }
 
 /* name */
-.card h2 {
-    font-size: 14px;
-    margin-top: 12px;
+.member h2 {
+  font-size: .95rem; font-weight: 800; color: var(--navy);
+  margin-top: 12px;
 }
 
 /* student ID, email, course */
-.card p {
-    font-size: 11px;
-    margin-top: 4px;
+.member p {
+  font-size: .75rem;
+  line-height: 1.5;
 }
 
-.card a {
-    color: #2c4060;
-}
-
-/* phone: one card per row */
+/* phone: one member per row */
 @media (max-width: 600px) {
-    body {
-        padding: 15px;
-    }
-
-    .team {
-        grid-template-columns: 1fr;
-        max-width: 280px;  /* otherwise one photo fills the whole phone screen */
-    }
+  .team {
+    grid-template-columns: 1fr;
+    max-width: 280px;  /* otherwise one photo fills the whole screen */
+  }
 }
