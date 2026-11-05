@@ -39,6 +39,11 @@ const DATA = {
   ]
 };
 
+// People who asked for a staff account on the register form
+cmsAccounts().filter(a => a.role === 'staff').forEach(a => DATA.approvals.push({
+  id: a.id, name: a.name, email: a.email, role: 'Staff', dateReceived: a.dateReceived
+}));
+
 const STATUS_LABEL = { pending: 'Pending', approved: 'Approved', rejected: 'Rejected' };
 
 /* ---------- 2. Helpers ---------- */
@@ -218,6 +223,7 @@ function decide(approval, status){
   if (status === 'pending') delete decisions[approval.id];
   else decisions[approval.id] = status;
   save(KEYS.decisions, decisions);
+  cmsSetAccountStatus(approval.id, status);
 
   renderApprovals();
   renderUsers();

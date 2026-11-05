@@ -118,11 +118,17 @@ const vehicleUsable = v => v.approved && !isExpired(v.insurance) && !isExpired(v
 const vehicleFits  = (v, o) => { const t = totals(o); return t.kg <= v.maxKg && t.m3 <= v.maxM3; };
 const selectedVehicle = () => vehicles.find(v => v.id === $('vehicleSelect').value) || null;
 
+// Certificates sent earlier stay applied after a reload
+const docUpdates = cmsRead('cms.vehicleDocs', {});
+vehicles.forEach(v => Object.assign(v, docUpdates[v.id]));
+
 /* =========================================================
    Vehicle selector
    ========================================================= */
 function buildVehicleOptions(){
   const sel = $('vehicleSelect');
+  const current = sel.value;
+  sel.querySelectorAll('option[value]:not([value=""])').forEach(opt => opt.remove());
   vehicles.forEach(v => {
     const opt = document.createElement('option');
     opt.value = v.id;
@@ -130,7 +136,15 @@ function buildVehicleOptions(){
     opt.disabled = !vehicleUsable(v);
     sel.appendChild(opt);
   });
-  sel.value = 'v1';   // default from the mock-up
+  sel.value = current || 'v1';   // default from the mock-up
+
+  // Every vehicle here, also the expired ones: those are the ones needing a new document
+  $('docVehicle').replaceChildren(...vehicles.map(v => {
+    const opt = document.createElement('option');
+    opt.value = v.id;
+    opt.textContent = `${v.model} ${v.plate}`;
+    return opt;
+  }));
 }
 
 function renderVehicleMeta(){
@@ -532,6 +546,29 @@ function renderAll(){
   renderCompleted();
   drawRoute();
 }
+
+$('docForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = vehicles.find(x => x.id === $('docVehicle').value);
+  const document_ = $('docType').value, expiry = $('docExpiry').value, file = $('docFile').files[0];
+
+  if (!expiry || !file){ showMsg($('docMsg'), 'Choose the new expiry date and the certificate file.'); return; }
+  if (expiry <= todayISO()){ showMsg($('docMsg'), 'The new document must still be valid after today.'); return; }
+
+  v[document_] = expiry;
+  docUpdates[v.id] = { ...docUpdates[v.id], [document_]: expiry };
+  cmsWrite('cms.vehicleDocs', docUpdates);
+
+  // Staff get an alert: only the file name is kept, there is nowhere to upload it yet
+  cmsWrite('cms.alerts', cmsRead('cms.alerts', []).concat({
+    id: Date.now(), model: v.model, plate: v.plate, document: document_, expiry, file: file.name
+  }));
+
+  $('docForm').reset();
+  showMsg($('docMsg'), 'Sent. Staff have been alerted.', 'success');
+  buildVehicleOptions();
+  renderVehicleMeta();
+});
 
 buildVehicleOptions();
 renderVehicleMeta();

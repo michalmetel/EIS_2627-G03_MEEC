@@ -34,8 +34,36 @@ tabs.forEach(function (tab) {
     document.getElementById('authTitle').textContent = tab.textContent + ' Login';
 
     document.getElementById('loginMsg').textContent = '';
+    updateRegisterPanel();
   });
 });
+
+
+// what the register form asks for depends on the role. Couriers and staff wait
+// for an approval, admin accounts can't be requested here.
+const REGISTER_TEXT = {
+  client: { title: 'Create Client Account', lead: 'You can log in right after.' },
+  courier: { title: 'Request Courier Account', lead: 'Staff check your documents before you can log in.' },
+  staff: { title: 'Request Staff Account', lead: 'An admin approves your account before you can log in.' }
+};
+
+function updateRegisterPanel() {
+
+  const text = REGISTER_TEXT[role];
+
+  document.getElementById('registerRow').hidden = !text;
+  document.getElementById('registerMsg').textContent = '';
+
+  if (!text) {
+    registerPanel.hidden = true;
+    loginPanel.hidden = false;
+    return;
+  }
+
+  document.getElementById('registerTitle').textContent = text.title;
+  document.getElementById('registerLead').textContent = text.lead;
+  document.getElementById('courierDocs').hidden = role !== 'courier';
+}
 
 
 const loginPanel = document.getElementById('loginPanel');
@@ -96,12 +124,35 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     return;
   }
 
+  // no passwords to compare without a backend, only the sample accounts' status
+  const account = cmsFindAccount(email);
+
+  if (account && account.role !== role) {
+    msg.textContent = 'This email belongs to a ' + account.role + ' account. Use that tab.';
+    msg.className = 'msg error';
+    return;
+  }
+
+  if (account && account.status === 'rejected') {
+    msg.textContent = 'Your account request was not approved.';
+    msg.className = 'msg error';
+    return;
+  }
+
+  if (account && account.status !== 'approved') {
+    msg.textContent = 'Your account is still waiting for approval.';
+    msg.className = 'msg error';
+    return;
+  }
+
   // only frontend validation for sprint 1
   msg.textContent = 'Login validated.';
   msg.className = 'msg success';
 
   // remembered until the tab is closed or the user logs out, auth.js reads it
   sessionStorage.setItem('cmsRole', role);
+  sessionStorage.setItem('cmsEmail', email.toLowerCase());
+  sessionStorage.setItem('cmsName', account ? account.name : nameFromEmail(email));
 
   setTimeout(function () {
     window.location.href = rolePages[role];
@@ -181,16 +232,54 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     return;
   }
 
+  if (cmsFindAccount(email)) {
+    msg.textContent = 'There is already an account with this email.';
+    msg.className = 'msg error';
+    return;
+  }
+
+  const idCard = document.getElementById('registerIdCard').files[0];
+  const record = document.getElementById('registerRecord').files[0];
+
+  if (role === 'courier' && (!idCard || !record)) {
+    msg.textContent = 'Please add your ID card and criminal record.';
+    msg.className = 'msg error';
+    return;
+  }
+
   if (captchaState !== 'checked') {
     msg.textContent = "Please confirm you're not a robot.";
     msg.className = 'msg error';
     return;
   }
 
+  // only what the other pages show: not the password, phone or NIF
+  cmsAddAccount({
+    id: 'account-' + Date.now(),
+    name: name,
+    email: email.toLowerCase(),
+    role: role,
+    status: role === 'client' ? 'approved' : 'pending',
+    dateReceived: new Date().toISOString().slice(0, 10),
+    documents: role === 'courier' ? ['ID card', 'Criminal record'] : []
+  });
+
+  this.reset();
   resetCaptcha();
-  msg.textContent = 'Registration validated. Data will be saved in sprint 2.';
+
+  msg.textContent = role === 'client'
+    ? 'Account created. You can log in now.'
+    : 'Request sent. You can log in once it is approved.';
   msg.className = 'msg success';
 });
+
+
+// for people without a sample account: maria.silva@x.pt becomes Maria Silva
+function nameFromEmail(email) {
+  return email.split('@')[0].split(/[._-]+/).map(function (part) {
+    return part.charAt(0).toUpperCase() + part.slice(1);
+  }).join(' ');
+}
 
 
 function validEmail(email) {

@@ -793,3 +793,46 @@ td .badge {
     padding: 9px 14px;
   }
 }
+
+/* Update vehicle documents */
+.doc-form {
+  margin-top: 20px;
+  padding: 18px 20px;
+}
+
+.doc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.doc-grid label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.doc-grid select,
+.doc-grid input {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1.5px solid #b9c6da;
+  border-radius: 6px;
+  background: #fff;
+  font-size: .84rem;
+}
+
+.btn-primary-doc {
+  background: var(--blue-mid);
+  color: #fff;
+}
+
+.btn-primary-doc:hover { background: var(--blue-dark); }
+
+@media (max-width: 520px) {
+  .doc-grid { grid-template-columns: 1fr; }
+}

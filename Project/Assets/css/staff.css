@@ -90,6 +90,20 @@ tbody tr:hover { background: var(--soft); }
   outline: 3px solid var(--accent); outline-offset: 2px;
 }
 
+/* ---------- Alerts ---------- */
+.alerts { display: grid; gap: 8px; }
+.alert {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 10px 16px; border-radius: 8px; border-left: 4px solid;
+  font-size: .92rem; font-weight: 700;
+}
+.alert-new { background: #e3ecfa; border-color: var(--blue); color: var(--blue-dark); }
+.alert-expired { background: var(--err-bg); border-color: var(--err); color: var(--err); }
+.alert-dismiss {
+  flex-shrink: 0; border: 0; background: none; cursor: pointer;
+  font-size: .82rem; font-weight: 800; color: inherit; text-decoration: underline;
+}
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 28px;

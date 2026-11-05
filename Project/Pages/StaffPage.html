@@ -46,6 +46,12 @@
 <main class="container">
   <h1 class="sr-only">Staff panel</h1>
 
+  <!-- Alerts: new and expired vehicle documents -->
+  <section aria-labelledby="alertsTitle" id="alertsSection">
+    <h2 class="section-title" id="alertsTitle">Alerts</h2>
+    <ul class="alerts" id="alertsList"></ul>
+  </section>
+
   <!-- Pending couriers -->
   <section aria-labelledby="couriersTitle">
     <h2 class="section-title" id="couriersTitle">Pending Approvals: Couriers</h2>
@@ -101,6 +107,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="../Assets/js/store.js"></script>
 <script src="../Assets/js/staff.js"></script>
 </body>
 </html>

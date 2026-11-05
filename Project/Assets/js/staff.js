@@ -20,6 +20,11 @@ const couriers = [
 ];
 
 // Store expiry DATES (YYYY-MM-DD); Valid/Expired is computed below.
+// People who asked for a courier account on the register form
+cmsAccounts().filter(a => a.role === 'courier').forEach(a => couriers.push({
+  id: a.id, name: a.name, email: a.email, documents: a.documents, dateReceived: a.dateReceived, status: a.status
+}));
+
 const vehicles = [
   { plate: 'AA-00-XX', model: 'Renault Kangoo', type: 'Van', insuranceExpiry: '2026-10-01', inspectionExpiry: '2027-05-12', status: 'pending' },
   { plate: 'AA-99-XX', model: 'MAN TGL', type: 'Truck', insuranceExpiry: '2027-02-04', inspectionExpiry: '2026-10-01', status: 'pending' },
@@ -134,6 +139,7 @@ function reviewCourier(id){
   const c = couriers.find(x => x.id === id);
   if (!c) return;
   c.status = 'review';
+  cmsSetAccountStatus(id, 'review');
   renderCouriers();
   toast(`${c.name} is now in review`);
 }
@@ -142,6 +148,7 @@ function approveCourier(id){
   const c = couriers.find(x => x.id === id);
   if (!c) return;
   c.status = 'approved';
+  cmsSetAccountStatus(id, 'approved');
   renderCouriers();
   toast(`${c.name} was approved`);
 }
@@ -150,6 +157,7 @@ function rejectCourier(id){
   const c = couriers.find(x => x.id === id);
   if (!c) return;
   c.status = 'rejected';
+  cmsSetAccountStatus(id, 'rejected');
   renderCouriers();
   toast(`${c.name} was rejected`);
 }
@@ -204,9 +212,48 @@ function renderVehicles(){
 function decideVehicle(vehicle, status){
   vehicle.status = status;
   renderVehicles();
+  renderAlerts();
   toast(`Vehicle ${vehicle.plate} was ${status}`);
 }
 
+/* ---------- Alerts ---------- */
+// New certificates come from the courier page, expired ones from the vehicles above
+function renderAlerts(){
+  const uploads = cmsRead('cms.alerts', []);
+  const items = [];
+
+  uploads.forEach(a => {
+    const dismiss = el('button', {
+      class: 'alert-dismiss', type: 'button',
+      onclick: () => {
+        cmsWrite('cms.alerts', cmsRead('cms.alerts', []).filter(x => x.id !== a.id));
+        renderAlerts();
+      }
+    }, 'Dismiss');
+    items.push(el('li', { class: 'alert alert-new' },
+      el('span', {}, `${a.model} ${a.plate}: new ${a.document} certificate uploaded (${a.file}), valid until ${formatDate(a.expiry)}.`),
+      dismiss));
+  });
+
+  vehicles.filter(v => v.status !== 'rejected').forEach(v => {
+    [['insurance', v.insuranceExpiry], ['inspection', v.inspectionExpiry]].forEach(([name, iso]) => {
+      if (isExpired(iso)){
+        items.push(el('li', { class: 'alert alert-expired' },
+          el('span', {}, `${v.model} ${v.plate}: ${name} expired on ${formatDate(iso)}.`)));
+      }
+    });
+  });
+
+  $('alertsList').replaceChildren(...items);
+  $('alertsSection').hidden = items.length === 0;
+}
+
+// A courier uploading from another tab shows up without reloading
+window.addEventListener('storage', e => {
+  if (e.key === 'cms.alerts') renderAlerts();
+});
+
 /* ---------- Init ---------- */
+renderAlerts();
 renderCouriers();
 renderVehicles();

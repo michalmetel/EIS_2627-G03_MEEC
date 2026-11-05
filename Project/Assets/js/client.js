@@ -22,7 +22,6 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let originMarker;
 let destinationMarker;
 let line;
-let orderNumber = 2042;
 let routeRequest = 0;
 let picking = 'origin';
 
@@ -39,6 +38,7 @@ let nominatimQueue = Promise.resolve();
 
 // the page is public: the login is only asked for when an order is submitted
 const DRAFT_KEY = 'cmsOrderDraft';
+const ORDERS_KEY = 'cms.orders';
 const draftFields = ['originLat', 'originLng', 'destLat', 'destLng'];
 const productFields = ['description', 'category', 'weight', 'volume'];
 let productCount = 0;
@@ -638,27 +638,22 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
       return;
     }
 
-    orderNumber++;
+    const order = {
+      // the courier's sample list goes up to #2045
+      id: Math.max.apply(null, [2045].concat(savedOrders().map(function (o) { return o.id; }))) + 1,
+      email: sessionStorage.getItem('cmsEmail'),
+      origin: [c.originLat, c.originLng],
+      dest: [c.destLat, c.destLng],
+      originName: '',
+      destName: '',
+      products: products.map(function (product) {
+        return product.category + ': ' + product.description;
+      }).join('; '),
+      status: 'Initiated'
+    };
 
-    // add the new order to the status table
-    const table = document.getElementById('ordersBody');
-    const row = table.insertRow(0);
-
-    row.insertCell(0).textContent = '#' + orderNumber;
-    fillPlace(row.insertCell(1), c.originLat, c.originLng);
-    fillPlace(row.insertCell(2), c.destLat, c.destLng);
-    row.insertCell(3).textContent = products.map(function (product) {
-      return product.category + ': ' + product.description;
-    }).join('; ');
-    row.insertCell(4).textContent = 'Pending';
-
-    const statusCell = row.insertCell(5);
-    const status = document.createElement('span');
-
-    status.className = 'status status-initiated';
-    status.textContent = 'Initiated';
-
-    statusCell.appendChild(status);
+    cmsWrite(ORDERS_KEY, savedOrders().concat(order));
+    addOrderRow(order);
 
     msg.textContent = 'Order added correctly.';
     msg.className = 'msg success';
@@ -666,13 +661,49 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
 });
 
 
-// coordinates at first, replaced by the street name when the lookup answers
-function fillPlace(cell, lat, lng) {
+function savedOrders() {
+  return cmsRead(ORDERS_KEY, []);
+}
 
-  cell.textContent = lat.toFixed(4) + ', ' + lng.toFixed(4);
+
+function addOrderRow(order) {
+
+  const row = document.getElementById('ordersBody').insertRow(0);
+
+  row.insertCell(0).textContent = '#' + order.id;
+  fillPlace(row.insertCell(1), order, 'origin');
+  fillPlace(row.insertCell(2), order, 'dest');
+  row.insertCell(3).textContent = order.products;
+  row.insertCell(4).textContent = 'Pending';
+
+  const status = document.createElement('span');
+
+  status.className = 'status status-initiated';
+  status.textContent = order.status;
+  row.insertCell(5).appendChild(status);
+}
+
+
+// coordinates at first, replaced by the street name when the lookup answers
+function fillPlace(cell, order, point) {
+
+  const lat = order[point][0];
+  const lng = order[point][1];
+
+  cell.textContent = order[point + 'Name'] || lat.toFixed(4) + ', ' + lng.toFixed(4);
+
+  if (order[point + 'Name']) return;
 
   lookupStreet(lat, lng).then(function (street) {
-    if (street) cell.textContent = street;
+
+    if (!street) return;
+
+    cell.textContent = street;
+
+    cmsWrite(ORDERS_KEY, savedOrders().map(function (saved) {
+      if (saved.id === order.id) saved[point + 'Name'] = street;
+      return saved;
+    }));
   }).catch(function () {
     // keep the coordinates
   });
@@ -745,6 +776,14 @@ document.getElementById('productList').addEventListener('input', updateProducts)
 document.getElementById('addProduct').addEventListener('click', function () {
   addProduct().querySelector('[data-field="description"]').focus();
 });
+
+
+// this client's earlier orders
+if (loggedIn) {
+  savedOrders().filter(function (order) {
+    return order.email === sessionStorage.getItem('cmsEmail');
+  }).forEach(addOrderRow);
+}
 
 
 // an order waiting for the login: put it back in the form, and send it once logged in

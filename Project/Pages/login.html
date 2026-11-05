@@ -74,15 +74,15 @@
           <p class="msg" id="loginMsg" role="alert" aria-live="polite"></p>
         </form>
 
-        <div class="switch-row">
+        <div class="switch-row" id="registerRow">
           <span>Don't have an account yet?</span>
           <button class="btn btn-light" type="button" id="showRegister">Register here</button>
         </div>
       </div>
 
       <div id="registerPanel" hidden>
-        <h1>Create Client Account</h1>
-        <p class="lead">Sprint 1 frontend registration prototype.</p>
+        <h1 id="registerTitle">Create Client Account</h1>
+        <p class="lead" id="registerLead">You can log in right after.</p>
 
         <form id="registerForm" novalidate>
           <div class="field">
@@ -110,6 +110,18 @@
             <label for="registerPassword">Password</label>
             <input id="registerPassword" type="password" minlength="6"
                    autocomplete="new-password" required>
+          </div>
+
+          <div id="courierDocs" hidden>
+            <div class="field">
+              <label for="registerIdCard">ID card</label>
+              <input id="registerIdCard" type="file" accept=".pdf,image/*">
+            </div>
+
+            <div class="field">
+              <label for="registerRecord">Criminal record</label>
+              <input id="registerRecord" type="file" accept=".pdf,image/*">
+            </div>
           </div>
 
           <div class="captcha" id="captcha">
@@ -148,6 +160,7 @@
 
 <script src="https://unpkg.com/intl-tel-input@29.5.4/dist/js/intlTelInputWithUtils.min.js"></script>
 <script src="../Assets/js/phone.js"></script>
+<script src="../Assets/js/store.js"></script>
 <script src="../Assets/js/login.js"></script>
 </body>
 </html>

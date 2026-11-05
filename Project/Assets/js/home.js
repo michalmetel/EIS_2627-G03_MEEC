@@ -2,16 +2,45 @@
 const menuToggle=document.getElementById('menuToggle'),mainNav=document.getElementById('mainNav');
 menuToggle.addEventListener('click',()=>{const o=mainNav.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(o));});
 
-// Frontend only for now: search does nothing
-document.getElementById('searchForm').addEventListener('submit',e=>e.preventDefault());
+// Search: an order number goes to tracking, words go to the page they belong to
+const SEARCH_PAGES=[
+  {url:'#trackTitle',words:['track','tracking','shipment','status']},
+  {url:'client.html',words:['ship','send','parcel','order','client','map','coordinates']},
+  {url:'#services',words:['service','services','delivery','vehicle','how','works','proof']},
+  {url:'login.html',words:['login','log in','sign in','account','password']},
+  {url:'login.html#register',words:['register','sign up','create']},
+  {url:'CourierPage.html',words:['courier','couriers','driver','cockpit']},
+  {url:'StaffPage.html',words:['staff','approval','approvals','insurance','inspection']},
+  {url:'admin.html',words:['admin','dashboard','statistics','kpi']},
+  {url:'TeamPage.html',words:['team','about','members','students','group']},
+  {url:'support.html',words:['support','help','contact','faq','question']},
+  {url:'HomePage.html',words:['home','start']}
+];
+const searchInput=document.getElementById('searchInput'),searchMsg=document.getElementById('searchMsg');
+searchInput.addEventListener('input',()=>{searchMsg.textContent='';});
+document.getElementById('searchForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const term=searchInput.value.trim().toLowerCase();
+  if(term==='')return;
+  if(/^#?\d{4}$/.test(term)){
+    trackInput.value=term;
+    document.getElementById('trackForm').requestSubmit();
+    document.getElementById('trackTitle').scrollIntoView();
+    return;
+  }
+  const page=term.length>=3&&SEARCH_PAGES.find(p=>p.words.some(w=>w.startsWith(term)||term.includes(w)));
+  if(page)location.href=page.url;
+  else searchMsg.textContent='Nothing found for "'+searchInput.value.trim()+'".';
+});
 
 // Reduced motion: stop the background dot
 const reduceMotion=matchMedia('(prefers-reduced-motion:reduce)').matches;
 if(reduceMotion){const s=document.getElementById('routeSvg');if(s.pauseAnimations)s.pauseAnimations();}
 
-// Tracking. Sample data: the orders shown on the client and courier pages
+// Tracking. Sample data: the orders shown on the client and courier pages, plus new ones
 const SAMPLE_ORDERS={2038:'Completed',2039:'Completed',2040:'Completed',2041:'In Progress',2042:'Initiated',2043:'Initiated',2044:'Initiated',2045:'Initiated'};
 const TRACK_STEPS=['Initiated','In Progress','Completed'];
+cmsRead('cms.orders',[]).forEach(o=>{SAMPLE_ORDERS[o.id]=o.status;});
 const trackResult=document.getElementById('trackResult'),tlFill=document.getElementById('tlFill'),
       tlSteps=[...document.querySelectorAll('.tl-steps li')],trackBtn=document.querySelector('.track-row button'),
       trackInput=document.getElementById('trackingNumber'),trackRow=document.querySelector('.track-row'),

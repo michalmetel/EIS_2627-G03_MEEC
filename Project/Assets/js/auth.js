@@ -24,7 +24,21 @@
     if (e.persisted) guard();
   });
 
+  // the name of whoever logged in (the admin page shows its own editable profile)
+  document.addEventListener('DOMContentLoaded', function () {
+    const name = sessionStorage.getItem('cmsName');
+    const text = document.querySelector('.user-text strong:not(#greeting)');
+    const avatar = document.querySelector('span.avatar');
+
+    if (name && text) text.textContent = 'Hello ' + name.split(' ')[0] + '!';
+    if (name && avatar) avatar.textContent = name.charAt(0).toUpperCase();
+  });
+
   document.addEventListener('click', function (e) {
-    if (e.target.closest('.logout')) sessionStorage.removeItem('cmsRole');
+    if (e.target.closest('.logout')) {
+      ['cmsRole', 'cmsName', 'cmsEmail'].forEach(function (key) {
+        sessionStorage.removeItem(key);
+      });
+    }
   });
 })();

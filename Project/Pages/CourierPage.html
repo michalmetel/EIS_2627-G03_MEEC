@@ -70,6 +70,33 @@
       </div>
       <p class="msg error" id="mapMsg" role="alert"></p>
       <p class="msg" id="tileMsg" role="status"></p>
+
+      <form class="card doc-form" id="docForm" novalidate>
+        <h2 class="h2">Update vehicle documents</h2>
+        <div class="doc-grid">
+          <div>
+            <label for="docVehicle">Vehicle</label>
+            <select id="docVehicle" required></select>
+          </div>
+          <div>
+            <label for="docType">Document</label>
+            <select id="docType" required>
+              <option value="insurance">Insurance</option>
+              <option value="inspection">Inspection</option>
+            </select>
+          </div>
+          <div>
+            <label for="docExpiry">Valid until</label>
+            <input id="docExpiry" type="date" required>
+          </div>
+          <div>
+            <label for="docFile">Certificate</label>
+            <input id="docFile" type="file" accept=".pdf,image/*" required>
+          </div>
+        </div>
+        <p class="msg" id="docMsg" role="alert"></p>
+        <button class="btn btn-primary-doc" type="submit">Send to staff</button>
+      </form>
     </section>
 
     <!-- RIGHT: active order -->
@@ -189,6 +216,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../Assets/js/store.js"></script>
 <script src="../Assets/js/courier.js"></script>
 </body>
 </html>
