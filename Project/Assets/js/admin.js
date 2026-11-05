@@ -288,6 +288,8 @@ function isValidNif(nif){
   return check === Number(nif[8]);
 }
 
+let phoneField = null;
+
 const validators = {
   name(v){
     if (!v) return 'Enter your full name.';
@@ -302,7 +304,7 @@ const validators = {
   },
   phone(v){
     if (!v) return 'Enter your phone number.';
-    if (!/^(\+\d{1,3})?\d{9}$/.test(v.replace(/\s+/g, ''))) return 'Use 9 digits, optionally with a country code (+351).';
+    if (phoneField && !phoneField.isValidNumberPrecise()) return 'Enter a valid number for the selected country.';
     return '';
   },
   nif(v){
@@ -356,6 +358,7 @@ function validateForm(){
 }
 
 function setupProfileForm(){
+  phoneField = setupPhone($('pfPhone'));
   const dialog = $('profileDialog');
   const form = $('profileForm');
   const alertBox = $('formAlert');
@@ -363,7 +366,8 @@ function setupProfileForm(){
   function fillForm(){
     $('pfName').value = profile.name;
     $('pfEmail').value = profile.email;
-    $('pfPhone').value = profile.phone;
+    if (phoneField) phoneField.setNumber(profile.phone);
+    else $('pfPhone').value = profile.phone;
     $('pfNif').value = profile.nif;
     $('pfPassword').value = '';
     $('pfConfirm').value = '';
@@ -406,7 +410,7 @@ function setupProfileForm(){
     }
 
     const v = readValues();
-    profile = { name: v.name, email: v.email, phone: v.phone.replace(/\s+/g, ''), nif: v.nif };
+    profile = { name: v.name, email: v.email, phone: phoneField ? phoneField.getNumber() : v.phone.replace(/\s+/g, ''), nif: v.nif };
     save(KEYS.profile, profile);              // the password is never stored in this prototype
     renderProfile();
     dialog.close();

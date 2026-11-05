@@ -4,22 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Courier Cockpit – CMS</title>
+<link rel="icon" href="../Assets/images/logo.svg" type="image/svg+xml">
+<script src="../Assets/js/auth.js" data-role="courier"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
 <!-- Leaflet (OpenStreetMap) -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="../Assets/css/common.css">
 <link rel="stylesheet" href="../Assets/css/courier.css">
 </head>
 <body>
 
+<div class="topbar">
+  <div class="container topbar-inner">
+    <nav class="audience" aria-label="Areas">
+      <a href="client.html">Clients</a>
+      <a href="CourierPage.html" class="active">Couriers</a>
+      <a href="StaffPage.html">Staff</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </div>
+</div>
+
 <header class="nav-wrap">
   <div class="container navbar">
-    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+    <a class="logo" href="HomePage.html" aria-label="CMS home"><img src="../Assets/images/logo.svg" alt=""><span>cms</span></a>
     <nav class="main-nav" id="mainNav" aria-label="Main">
       <a href="HomePage.html">Home</a>
-      <a href="services.html">Our Services</a>
-      <a href="about.html">About Us</a>
+      <a href="HomePage.html#services">Our Services</a>
+      <a href="TeamPage.html">About Us</a>
       <a href="support.html">Support</a>
     </nav>
     <div class="user">
@@ -168,7 +182,7 @@
 <footer class="footer">
   <div class="container footer-inner">
     <span>© 2026 CMS – Courier Management System</span>
-    <nav aria-label="Footer"><a href="HomePage.html">Home</a><a href="support.html">Support</a><a href="team.html">Team</a></nav>
+    <nav aria-label="Footer"><a href="HomePage.html">Home</a><a href="support.html">Support</a><a href="TeamPage.html">Team</a></nav>
   </div>
 </footer>
 

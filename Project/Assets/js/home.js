@@ -1,55 +1,81 @@
-// ---------- Mobile menu ----------
-const menuToggle = document.getElementById('menuToggle');
-const mainNav = document.getElementById('mainNav');
+// Mobile menu
+const menuToggle=document.getElementById('menuToggle'),mainNav=document.getElementById('mainNav');
+menuToggle.addEventListener('click',()=>{const o=mainNav.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(o));});
 
-menuToggle.addEventListener('click', () => {
-  const open = mainNav.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', String(open));
+// Frontend only for now: search does nothing
+document.getElementById('searchForm').addEventListener('submit',e=>e.preventDefault());
+
+// Reduced motion: stop the background dot
+const reduceMotion=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(reduceMotion){const s=document.getElementById('routeSvg');if(s.pauseAnimations)s.pauseAnimations();}
+
+// Tracking. Sample data: the orders shown on the client and courier pages
+const SAMPLE_ORDERS={2038:'Completed',2039:'Completed',2040:'Completed',2041:'In Progress',2042:'Initiated',2043:'Initiated',2044:'Initiated',2045:'Initiated'};
+const TRACK_STEPS=['Initiated','In Progress','Completed'];
+const trackResult=document.getElementById('trackResult'),tlFill=document.getElementById('tlFill'),
+      tlSteps=[...document.querySelectorAll('.tl-steps li')],trackBtn=document.querySelector('.track-row button'),
+      trackInput=document.getElementById('trackingNumber'),trackRow=document.querySelector('.track-row'),
+      trackMsg=document.getElementById('trackMsg'),trackStatus=document.getElementById('trackStatus');
+let tlTimers=[];
+
+function resetTracking(){
+  tlTimers.forEach(clearTimeout);tlTimers=[];
+  tlSteps.forEach(li=>li.className='');tlFill.style.width='0%';
+  trackStatus.textContent='';trackBtn.textContent='Track';
+}
+function trackError(text){
+  resetTracking();
+  trackResult.classList.remove('show');
+  trackMsg.textContent=text;
+  trackRow.classList.add('invalid');
+  trackInput.setAttribute('aria-invalid','true');
+  trackInput.focus();
+}
+trackInput.addEventListener('input',()=>{
+  trackMsg.textContent='';
+  trackRow.classList.remove('invalid');
+  trackInput.removeAttribute('aria-invalid');
 });
 
-// ---------- Forms (frontend only for now: no validation, no navigation) ----------
-document.getElementById('trackForm').addEventListener('submit', (e) => e.preventDefault());
-document.getElementById('searchForm').addEventListener('submit', (e) => e.preventDefault());
+document.getElementById('trackForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const value=trackInput.value.trim();
+  if(value===''){trackError('Please enter your order number.');return;}
+  // same format as the Order ID on the client page: 4 digits, with or without the #
+  if(!/^#?\d{4}$/.test(value)){trackError('Order numbers have 4 digits, for example #2041.');return;}
+  const id=value.replace('#',''),status=SAMPLE_ORDERS[id];
+  if(!status){trackError('We can\'t find order #'+id+'. Check the number and try again.');return;}
 
-// ---------- Animated counters ----------
-function animateCount(el) {
-  const target = Number(el.dataset.count);
-  const duration = 1400;
-  const start = performance.now();
+  trackInput.dispatchEvent(new Event('input'));
+  resetTracking();
+  trackResult.classList.add('show');trackBtn.textContent='Tracking…';
+  const stage=TRACK_STEPS.indexOf(status),at=(ms,fn)=>tlTimers.push(setTimeout(fn,ms));
+  const finish=()=>{trackStatus.textContent='Order #'+id+': '+status;trackBtn.textContent='Track';};
+  at(150,()=>tlSteps[0].classList.add('on'));
+  if(stage>=1)at(1000,()=>{tlSteps[0].className='done';tlSteps[1].classList.add('on');tlFill.style.width='50%';});
+  if(stage>=2)at(2100,()=>{tlSteps[1].className='done';tlSteps[2].classList.add('on');tlFill.style.width='100%';});
+  if(stage===2)at(3100,()=>{tlSteps[2].className='done';finish();});
+  else at(stage===1?1500:500,finish);
+});
 
-  function tick(now) {
-    const p = Math.min((now - start) / duration, 1);
-    const value = Math.floor(target * (1 - Math.pow(1 - p, 3)));
-    el.textContent = value.toLocaleString('en-US') + '+';
-    if (p < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+// Counters: count up from 0 as soon as the page loads
+const counters=document.querySelectorAll('[data-count]');
+function animateCount(el){
+  const target=Number(el.dataset.count),duration=2400,start=performance.now();
+  (function tick(now){
+    const p=Math.min((now-start)/duration,1),eased=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*eased).toLocaleString('en-US')+'+';
+    if(p<1)requestAnimationFrame(tick);
+  })(start);
+}
+if(!reduceMotion){
+  counters.forEach(c=>{c.textContent='0+';});
+  setTimeout(()=>counters.forEach(animateCount),450);
 }
 
-// ---------- Scroll reveal + counters ----------
-const reveals = document.querySelectorAll('.reveal');
-const counters = document.querySelectorAll('[data-count]');
-
-if ('IntersectionObserver' in window) {
-  const revealObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  reveals.forEach((el) => revealObserver.observe(el));
-
-  const counterObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animateCount(entry.target);
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  counters.forEach((c) => counterObserver.observe(c));
-} else {
-  reveals.forEach((el) => el.classList.add('visible'));
-}
+// Scroll reveal
+const reveals=document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  const ro=new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target);}}),{threshold:.15});
+  reveals.forEach(el=>ro.observe(el));
+}else{reveals.forEach(el=>el.classList.add('visible'));}

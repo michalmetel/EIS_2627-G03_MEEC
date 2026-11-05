@@ -1,0 +1,13 @@
+/* support.css: styles for support.html (shared styles are in common.css) */
+
+main { padding: 32px 0 56px; }
+
+.section-title {
+  font-size: 1.5rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 14px;
+}
+
+.support-card { max-width: 560px; padding: 28px 32px; }
+.support-card ul { margin-top: 14px; display: grid; gap: 8px; }
+.support-card a { font-weight: 800; color: var(--blue); }
+.support-card a:hover { color: var(--navy); text-decoration: underline; }

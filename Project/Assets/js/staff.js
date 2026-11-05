@@ -7,7 +7,7 @@
 'use strict';
 
 /* ---------- Sample data ---------- */
-// status: 'pending' | 'review' | 'rejected'
+// status: 'pending' | 'review' | 'approved' | 'rejected'
 const couriers = [
   {
     id: 1,
@@ -21,11 +21,12 @@ const couriers = [
 
 // Store expiry DATES (YYYY-MM-DD); Valid/Expired is computed below.
 const vehicles = [
-  { plate: 'AA-00-XX', model: 'Model', type: 'Van', insuranceExpiry: '2026-10-01', inspectionExpiry: '2027-05-12' },
-  { plate: 'AA-99-XX', model: 'Model', type: 'Car', insuranceExpiry: '2027-02-04', inspectionExpiry: '2026-10-01' }
+  { plate: 'AA-00-XX', model: 'Renault Kangoo', type: 'Van', insuranceExpiry: '2026-10-01', inspectionExpiry: '2027-05-12', status: 'pending' },
+  { plate: 'AA-99-XX', model: 'MAN TGL', type: 'Truck', insuranceExpiry: '2027-02-04', inspectionExpiry: '2026-10-01', status: 'pending' },
+  { plate: 'BC-12-DE', model: 'Honda PCX', type: 'Moto', insuranceExpiry: '2027-06-30', inspectionExpiry: '2027-03-15', status: 'pending' }
 ];
 
-const STATUS_LABEL = { pending: 'Pending', review: 'In review', rejected: 'Rejected' };
+const STATUS_LABEL = { pending: 'Pending', review: 'In review', approved: 'Approved', rejected: 'Rejected' };
 
 /* ---------- Helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -105,12 +106,13 @@ function renderCouriers(){
   }
 
   couriers.forEach(c => {
-    const done = c.status === 'rejected';
+    const done = c.status === 'approved' || c.status === 'rejected';
 
+    // Review comes first: once the documents are in review the courier can be approved
     const review = el('button', {
       class: 'btn', type: 'button',
-      onclick: () => reviewCourier(c.id)
-    }, 'Review');
+      onclick: () => (c.status === 'review' ? approveCourier(c.id) : reviewCourier(c.id))
+    }, c.status === 'pending' ? 'Review' : 'Approve');
     const reject = el('button', {
       class: 'btn btn-red', type: 'button',
       onclick: () => rejectCourier(c.id)
@@ -136,6 +138,14 @@ function reviewCourier(id){
   toast(`${c.name} is now in review`);
 }
 
+function approveCourier(id){
+  const c = couriers.find(x => x.id === id);
+  if (!c) return;
+  c.status = 'approved';
+  renderCouriers();
+  toast(`${c.name} was approved`);
+}
+
 function rejectCourier(id){
   const c = couriers.find(x => x.id === id);
   if (!c) return;
@@ -156,19 +166,45 @@ function renderVehicles(){
   body.replaceChildren();
 
   if (!vehicles.length){
-    body.append(el('tr', {}, el('td', { class: 'empty', colspan: '5' }, 'No pending vehicle approvals.')));
+    body.append(el('tr', {}, el('td', { class: 'empty', colspan: '7' }, 'No pending vehicle approvals.')));
     return;
   }
 
   vehicles.forEach(v => {
+    // A vehicle can only be allocated with valid insurance and inspection
+    const expired = isExpired(v.insuranceExpiry) || isExpired(v.inspectionExpiry);
+    const done = v.status !== 'pending';
+
+    const approve = el('button', {
+      class: 'btn', type: 'button',
+      onclick: () => decideVehicle(v, 'approved')
+    }, 'Approve');
+    const reject = el('button', {
+      class: 'btn btn-red', type: 'button',
+      onclick: () => decideVehicle(v, 'rejected')
+    }, 'Reject');
+    if (done || expired) approve.disabled = true;
+    if (done) reject.disabled = true;
+
+    const actions = el('div', { class: 'actions' }, approve, reject);
+    if (expired && !done) actions.append(el('p', { class: 'action-note' }, 'Expired document: can\'t be approved'));
+
     body.append(el('tr', {},
       el('td', {}, v.plate),
       el('td', {}, v.model),
       el('td', {}, v.type),
       el('td', {}, validityBadge(v.insuranceExpiry)),
-      el('td', {}, validityBadge(v.inspectionExpiry))
+      el('td', {}, validityBadge(v.inspectionExpiry)),
+      el('td', {}, el('span', { class: `status status-${v.status}` }, STATUS_LABEL[v.status])),
+      el('td', {}, actions)
     ));
   });
+}
+
+function decideVehicle(vehicle, status){
+  vehicle.status = status;
+  renderVehicles();
+  toast(`Vehicle ${vehicle.plate} was ${status}`);
 }
 
 /* ---------- Init ---------- */

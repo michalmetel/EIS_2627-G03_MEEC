@@ -4,28 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Client Page – CMS</title>
+<link rel="icon" href="../Assets/images/logo.svg" type="image/svg+xml">
+<script src="../Assets/js/auth.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="../Assets/css/common.css">
 <link rel="stylesheet" href="../Assets/css/client.css">
 </head>
 <body>
 
+<div class="topbar">
+  <div class="container topbar-inner">
+    <nav class="audience" aria-label="Areas">
+      <a href="client.html" class="active">Clients</a>
+      <a href="CourierPage.html">Couriers</a>
+      <a href="StaffPage.html">Staff</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+    <div class="auth" id="authLinks">
+      <a class="auth-btn" href="login.html">Login</a>
+      <a class="auth-btn auth-btn-solid" href="login.html#register">Register</a>
+    </div>
+  </div>
+</div>
+
 <header class="nav-wrap">
   <div class="container navbar">
-    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+    <a class="logo" href="HomePage.html" aria-label="CMS home"><img src="../Assets/images/logo.svg" alt=""><span>cms</span></a>
 
     <nav class="main-nav" id="mainNav" aria-label="Main">
       <a href="HomePage.html">Home</a>
-      <a href="client.html" class="active">Client</a>
-      <a href="services.html">Our Services</a>
+      <a href="HomePage.html#services">Our Services</a>
+      <a href="TeamPage.html">About Us</a>
       <a href="support.html">Support</a>
     </nav>
 
-    <div class="user">
+    <div class="user" id="userBox" hidden>
       <div class="user-text">
         <strong>Hello Ricardo!</strong>
         <span>Client</span>
@@ -50,6 +68,15 @@
 
       <form id="orderForm" novalidate>
         <h3>Origin</h3>
+        <div class="field">
+          <label for="originSearch">Street or place</label>
+          <div class="street-search">
+            <input id="originSearch" type="text" placeholder="e.g. Rua de Cedofeita, Porto" autocomplete="off"
+                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="originResults">
+            <ul class="street-results" id="originResults" role="listbox"></ul>
+          </div>
+          <p class="street-msg" id="originSearchMsg" role="status"></p>
+        </div>
         <div class="coord-grid">
           <div class="field">
             <label for="originLat">Latitude</label>
@@ -62,6 +89,15 @@
         </div>
 
         <h3>Destination</h3>
+        <div class="field">
+          <label for="destSearch">Street or place</label>
+          <div class="street-search">
+            <input id="destSearch" type="text" placeholder="e.g. Avenida dos Aliados, Porto" autocomplete="off"
+                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="destResults">
+            <ul class="street-results" id="destResults" role="listbox"></ul>
+          </div>
+          <p class="street-msg" id="destSearchMsg" role="status"></p>
+        </div>
         <div class="coord-grid">
           <div class="field">
             <label for="destLat">Latitude</label>
@@ -73,29 +109,13 @@
           </div>
         </div>
 
-        <h3>Parcel details</h3>
+        <h3>Products</h3>
 
-        <div class="field">
-          <label for="description">Description</label>
-          <textarea id="description" placeholder="e.g. Books and documents" required></textarea>
-        </div>
+        <div id="productList"></div>
 
-        <div class="two-cols">
-          <div class="field">
-            <label for="category">Category</label>
-            <input id="category" type="text" placeholder="Documents" required>
-          </div>
-
-          <div class="field">
-            <label for="weight">Weight (kg)</label>
-            <input id="weight" type="number" min="0.01" step="0.01" placeholder="2.50" required>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="volume">Volume (m³)</label>
-          <input id="volume" type="number" min="0.001" step="0.001"
-                 placeholder="0.020" required>
+        <div class="product-footer">
+          <button class="btn btn-light" type="button" id="addProduct">+ Add another product</button>
+          <span id="productTotal"></span>
         </div>
 
         <button class="btn btn-primary btn-full" type="submit">Submit Order</button>
@@ -104,15 +124,22 @@
     </div>
 
     <div class="card map-card">
+      <div class="map-pick">
+        <span>Click the map to set the:</span>
+        <button type="button" class="pick-btn active" data-point="origin" aria-pressed="true">Origin</button>
+        <button type="button" class="pick-btn" data-point="dest" aria-pressed="false">Destination</button>
+      </div>
       <div id="map" role="region" aria-label="Origin and destination map"></div>
       <div class="map-info">
-        <span>Origin: <b id="originText">—</b></span>
-        <span>Destination: <b id="destText">—</b></span>
+        <p>Origin: <b id="originStreet">—</b> <span id="originText"></span></p>
+        <p>Destination: <b id="destStreet">—</b> <span id="destText"></span></p>
+        <p>Route: <b id="routeInfo">—</b></p>
+        <p class="map-warn" id="deliveryMsg" role="alert"></p>
       </div>
     </div>
   </section>
 
-  <section class="status-section" aria-labelledby="statusTitle">
+  <section class="status-section" id="statusSection" aria-labelledby="statusTitle" hidden>
     <h2 id="statusTitle">Order Status</h2>
 
     <div class="card table-card">
@@ -164,6 +191,37 @@
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<template id="productTemplate">
+  <div class="product">
+    <div class="product-head">
+      <h4 class="product-title"></h4>
+      <button class="product-remove" type="button">Remove</button>
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea data-field="description" placeholder="e.g. Books and documents" required></textarea>
+    </div>
+
+    <div class="two-cols">
+      <div class="field">
+        <label>Category</label>
+        <input data-field="category" type="text" placeholder="Documents" required>
+      </div>
+
+      <div class="field">
+        <label>Weight (kg)</label>
+        <input data-field="weight" type="number" min="0.01" step="0.01" placeholder="2.50" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Volume (m³)</label>
+      <input data-field="volume" type="number" min="0.001" step="0.001" placeholder="0.020" required>
+    </div>
+  </div>
+</template>
+
 <script src="../Assets/js/client.js"></script>
 </body>
 </html>

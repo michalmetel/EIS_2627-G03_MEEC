@@ -4,20 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Panel – CMS</title>
+<link rel="icon" href="../Assets/images/logo.svg" type="image/svg+xml">
+<script src="../Assets/js/auth.js" data-role="admin"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/intl-tel-input@29.5.4/dist/css/intlTelInput.css">
+<link rel="stylesheet" href="../Assets/css/common.css">
 <link rel="stylesheet" href="../Assets/css/admin.css">
 </head>
 <body>
 
+<div class="topbar">
+  <div class="container topbar-inner">
+    <nav class="audience" aria-label="Areas">
+      <a href="client.html">Clients</a>
+      <a href="CourierPage.html">Couriers</a>
+      <a href="StaffPage.html">Staff</a>
+      <a href="admin.html" class="active">Admin</a>
+    </nav>
+  </div>
+</div>
+
 <header class="nav-wrap">
   <div class="container navbar">
-    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+    <a class="logo" href="HomePage.html" aria-label="CMS home"><img src="../Assets/images/logo.svg" alt=""><span>cms</span></a>
     <nav class="main-nav" id="mainNav" aria-label="Main">
       <a href="HomePage.html">Home</a>
-      <a href="services.html">Our Services</a>
-      <a href="about.html">About Us</a>
+      <a href="HomePage.html#services">Our Services</a>
+      <a href="TeamPage.html">About Us</a>
       <a href="support.html">Support</a>
     </nav>
     <div class="user">
@@ -177,7 +192,7 @@
     <div class="field-row">
       <div class="field">
         <label for="pfPhone">Phone</label>
-        <input id="pfPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="912 345 678" required>
+        <input id="pfPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
         <p class="error" id="pfPhoneError"></p>
       </div>
       <div class="field">
@@ -209,6 +224,8 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/admin.js"></script>
+<script src="https://unpkg.com/intl-tel-input@29.5.4/dist/js/intlTelInputWithUtils.min.js"></script>
+<script src="../Assets/js/phone.js"></script>
+<script src="../Assets/js/admin.js"></script>
 </body>
 </html>

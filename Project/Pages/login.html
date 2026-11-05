@@ -4,21 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Login / Register – CMS</title>
+<link rel="icon" href="../Assets/images/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/intl-tel-input@29.5.4/dist/css/intlTelInput.css">
+<link rel="stylesheet" href="../Assets/css/common.css">
 <link rel="stylesheet" href="../Assets/css/login.css">
 </head>
 <body>
 
+<div class="topbar">
+  <div class="container topbar-inner">
+    <nav class="audience" aria-label="Areas">
+      <a href="client.html">Clients</a>
+      <a href="CourierPage.html">Couriers</a>
+      <a href="StaffPage.html">Staff</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </div>
+</div>
+
 <header class="nav-wrap">
   <div class="container navbar">
-    <a class="logo" href="HomePage.html" aria-label="CMS home">CMS Logo</a>
+    <a class="logo" href="HomePage.html" aria-label="CMS home"><img src="../Assets/images/logo.svg" alt=""><span>cms</span></a>
 
     <nav class="main-nav" id="mainNav" aria-label="Main">
       <a href="HomePage.html">Home</a>
-      <a href="services.html">Our Services</a>
-      <a href="about.html">About Us</a>
+      <a href="HomePage.html#services">Our Services</a>
+      <a href="TeamPage.html">About Us</a>
       <a href="support.html">Support</a>
     </nav>
 
@@ -34,13 +48,14 @@
 
     <div class="role-tabs" aria-label="Choose role">
       <button type="button" class="role-tab active" data-role="client">Client</button>
+      <button type="button" class="role-tab" data-role="courier">Courier</button>
       <button type="button" class="role-tab" data-role="staff">Staff</button>
+      <button type="button" class="role-tab" data-role="admin">Admin</button>
     </div>
 
     <div class="card auth-card">
       <div id="loginPanel">
         <h1 id="authTitle">Client Login</h1>
-        <p class="lead">Access the Courier Management System.</p>
 
         <form id="loginForm" novalidate>
           <div class="field">
@@ -97,6 +112,16 @@
                    autocomplete="new-password" required>
           </div>
 
+          <div class="captcha" id="captcha">
+            <button class="captcha-box" type="button" id="captchaBox" role="checkbox"
+                    aria-checked="false" aria-labelledby="captchaLabel"></button>
+            <span class="captcha-label" id="captchaLabel">I'm not a robot</span>
+            <span class="captcha-brand">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-2.9 8.3-7 10-4.1-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+              CMS Verify
+            </span>
+          </div>
+
           <button class="btn btn-primary btn-full" type="submit">Register</button>
           <p class="msg" id="registerMsg" role="alert" aria-live="polite"></p>
         </form>
@@ -121,6 +146,8 @@
   </div>
 </footer>
 
+<script src="https://unpkg.com/intl-tel-input@29.5.4/dist/js/intlTelInputWithUtils.min.js"></script>
+<script src="../Assets/js/phone.js"></script>
 <script src="../Assets/js/login.js"></script>
 </body>
 </html>

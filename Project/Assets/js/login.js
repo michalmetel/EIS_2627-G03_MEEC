@@ -11,6 +11,14 @@ if (menuBtn && nav) {
 
 let role = 'client';
 
+// page opened after login for each role
+const rolePages = {
+  client: 'client.html',
+  courier: 'CourierPage.html',
+  staff: 'StaffPage.html',
+  admin: 'admin.html'
+};
+
 const tabs = document.querySelectorAll('.role-tab');
 tabs.forEach(function (tab) {
   tab.addEventListener('click', function () {
@@ -23,11 +31,7 @@ tabs.forEach(function (tab) {
     role = tab.dataset.role;
 
     // change the title depending on the selected user
-    if (role === 'client') {
-      document.getElementById('authTitle').textContent = 'Client Login';
-    } else {
-      document.getElementById('authTitle').textContent = 'Staff Login';
-    }
+    document.getElementById('authTitle').textContent = tab.textContent + ' Login';
 
     document.getElementById('loginMsg').textContent = '';
   });
@@ -46,6 +50,24 @@ document.getElementById('showRegister').addEventListener('click', function () {
 document.getElementById('showLogin').addEventListener('click', function () {
   registerPanel.hidden = true;
   loginPanel.hidden = false;
+});
+
+// the Register links on other pages point to login.html#register
+if (window.location.hash === '#register') {
+  loginPanel.hidden = true;
+  registerPanel.hidden = false;
+}
+
+// visitors are sent here with the role they need: by auth.js when they open
+// a protected page, and by client.js when they submit an order
+const params = new URLSearchParams(window.location.search);
+tabs.forEach(function (tab) {
+  if (tab.dataset.role === params.get('role')) {
+    tab.click();
+    document.getElementById('loginMsg').textContent = params.get('from') === 'order'
+      ? 'Log in to send your order. It is saved and will be sent after you log in.'
+      : 'Please log in to access the ' + tab.textContent + ' area.';
+  }
 });
 
 
@@ -78,14 +100,43 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
   msg.textContent = 'Login validated.';
   msg.className = 'msg success';
 
+  // remembered until the tab is closed or the user logs out, auth.js reads it
+  sessionStorage.setItem('cmsRole', role);
+
   setTimeout(function () {
-    if (role === 'client') {
-      window.location.href = 'client.html';
-    } else {
-      window.location.href = 'StaffPage.html';
-    }
+    window.location.href = rolePages[role];
   }, 400);
 });
+
+
+const phoneField = setupPhone(document.getElementById('registerPhone'));
+
+
+// captcha look only: pressing it always passes and nothing is saved.
+// A real one needs the server to verify it (Sprint 2).
+const captchaBox = document.getElementById('captchaBox');
+let captchaState = 'empty';
+
+captchaBox.addEventListener('click', function () {
+
+  if (captchaState !== 'empty') return;
+
+  captchaState = 'checking';
+  captchaBox.classList.add('checking');
+  document.getElementById('registerMsg').textContent = '';
+
+  setTimeout(function () {
+    captchaState = 'checked';
+    captchaBox.classList.replace('checking', 'checked');
+    captchaBox.setAttribute('aria-checked', 'true');
+  }, 800);
+});
+
+function resetCaptcha() {
+  captchaState = 'empty';
+  captchaBox.classList.remove('checking', 'checked');
+  captchaBox.setAttribute('aria-checked', 'false');
+}
 
 
 document.getElementById('registerForm').addEventListener('submit', function (e) {
@@ -110,6 +161,13 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     return;
   }
 
+  // checks the number against the country chosen in the picker
+  if (phoneField && !phoneField.isValidNumberPrecise()) {
+    msg.textContent = 'Please enter a valid phone number for the selected country.';
+    msg.className = 'msg error';
+    return;
+  }
+
   // nif must have 9 digits
   if (!/^\d{9}$/.test(nif)) {
     msg.textContent = 'NIF must contain 9 digits.';
@@ -123,6 +181,13 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     return;
   }
 
+  if (captchaState !== 'checked') {
+    msg.textContent = "Please confirm you're not a robot.";
+    msg.className = 'msg error';
+    return;
+  }
+
+  resetCaptcha();
   msg.textContent = 'Registration validated. Data will be saved in sprint 2.';
   msg.className = 'msg success';
 });

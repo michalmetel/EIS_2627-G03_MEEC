@@ -164,7 +164,7 @@ function initMap(){
 
   // OpenStreetMap tiles (no API key needed).
   // OSM blocks tile requests that come from a page opened straight from disk
-  // (file://), so the site must run on a local server, e.g. VS Code "Live Server".
+  // (file://), so the site must run on a local server: python3 run.py
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -172,7 +172,7 @@ function initMap(){
   }).addTo(map);
 
   if (location.protocol === 'file:'){
-    showMsg($('tileMsg'), 'Map tiles only load when the site runs on a local server. Open it with VS Code "Live Server" (or run: python -m http.server) and use http://localhost.', 'info');
+    showMsg($('tileMsg'), 'Map tiles only load when the site runs on a local server. Start it from the project folder with: python3 run.py', 'info');
   }
   routeLayer = L.layerGroup().addTo(map);
   drawRoute();
