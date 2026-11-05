@@ -135,6 +135,7 @@
         <p>Destination: <b id="destStreet">—</b> <span id="destText"></span></p>
         <p>Route: <b id="routeInfo">—</b></p>
         <p class="map-warn" id="deliveryMsg" role="alert"></p>
+        <p class="map-note" id="deliveryNote" role="status"></p>
       </div>
     </div>
   </section>
@@ -206,7 +207,15 @@
     <div class="two-cols">
       <div class="field">
         <label>Category</label>
-        <input data-field="category" type="text" placeholder="Documents" required>
+        <select data-field="category" required>
+          <option value="">Choose a category</option>
+          <option>Documents</option>
+          <option>Electronics</option>
+          <option>Fragile</option>
+          <option>Other</option>
+        </select>
+        <input class="category-other" type="text" placeholder="e.g. Bike parts"
+               aria-label="Other category" hidden>
       </div>
 
       <div class="field">

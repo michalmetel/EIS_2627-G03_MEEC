@@ -94,6 +94,7 @@ function updateMap() {
     deliveryCheck = Promise.resolve('');
     document.getElementById('routeInfo').textContent = 'Check the coordinates.';
     document.getElementById('deliveryMsg').textContent = '';
+    document.getElementById('deliveryNote').textContent = '';
     return;
   }
 
@@ -117,19 +118,27 @@ function updateMap() {
   originMarker.bindPopup('Origin');
   destinationMarker.bindPopup('Destination');
 
-  const routeProblem = drawRoute(origin, destination);
+  const originCheck = pointCheck(c.originLat, c.originLng);
+  const destCheck = pointCheck(c.destLat, c.destLng);
+  const routeProblem = drawRoute(origin, destination, [originCheck, destCheck]);
   const request = routeRequest;
 
-  deliveryCheck = Promise.all([
-    pointProblem('The origin', c.originLat, c.originLng),
-    pointProblem('The destination', c.destLat, c.destLng),
-    routeProblem
-  ]).then(function (problems) {
-    return problems.filter(Boolean)[0] || '';
+  // water or no road route block the order, far from a road is only a warning
+  deliveryCheck = Promise.all([originCheck, destCheck, routeProblem]).then(function (answers) {
+    if (answers[0][0] || answers[1][0]) return 'Location invalid. Choose a valid location.';
+    return answers[2];
   });
 
-  deliveryCheck.then(function (problem) {
-    if (request === routeRequest) document.getElementById('deliveryMsg').textContent = problem;
+  Promise.all([deliveryCheck, originCheck, destCheck]).then(function (answers) {
+
+    if (request !== routeRequest) return;
+
+    const far = answers[1][1] > MAX_ROAD_DISTANCE || answers[2][1] > MAX_ROAD_DISTANCE;
+
+    document.getElementById('deliveryMsg').textContent = answers[0];
+    document.getElementById('deliveryNote').textContent = far && !answers[0]
+      ? 'Warning: this location is more than ' + MAX_ROAD_DISTANCE + ' m from a road. A courier may not be able to reach it.'
+      : '';
   });
 
   document.getElementById('originText').textContent =
@@ -148,7 +157,7 @@ function formatKm(metres) {
 }
 
 
-function drawRoute(origin, destination) {
+function drawRoute(origin, destination, pointChecks) {
 
   const request = ++routeRequest;
   const info = document.getElementById('routeInfo');
@@ -172,34 +181,36 @@ function drawRoute(origin, destination) {
       return r.json();
     })
     .then(function (data) {
+      return Promise.all(pointChecks).then(function (points) {
 
-      // with no road between them OSRM can still answer "Ok", with a route that ends
-      // at the closest point it can reach: the waypoint distance shows how far it moved
-      const moved = (data.waypoints || []).some(function (point) {
-        return point.distance > MAX_ROAD_DISTANCE;
+        // with no road between them OSRM can still answer "Ok", with a route that ends at the
+        // closest point it can reach: much further away than the nearest road to that point
+        const moved = (data.waypoints || []).some(function (point, i) {
+          return point.distance > points[i][1] + MAX_ROAD_DISTANCE;
+        });
+
+        if (data.code === 'NoRoute' || moved) {
+          if (request === routeRequest) info.textContent = 'No road route';
+          return 'There is no road between the origin and the destination.';
+        }
+
+        const route = data.routes && data.routes[0];
+
+        // no route, or the points changed in the meantime
+        if (!route || request !== routeRequest) return '';
+
+        const road = route.geometry.coordinates.map(function (p) {
+          return [p[1], p[0]];
+        });
+
+        line.setLatLngs(road).setStyle({ dashArray: null, weight: 5 });
+        map.fitBounds(line.getBounds(), { padding: [40, 40], maxZoom: 16 });
+
+        info.textContent = formatKm(route.distance) + ' · ~' +
+          Math.max(1, Math.round(route.duration / 60)) + ' min by road';
+
+        return '';
       });
-
-      if (data.code === 'NoRoute' || moved) {
-        if (request === routeRequest) info.textContent = 'No road route';
-        return 'There is no road between the origin and the destination.';
-      }
-
-      const route = data.routes && data.routes[0];
-
-      // no route, or the points changed in the meantime
-      if (!route || request !== routeRequest) return '';
-
-      const road = route.geometry.coordinates.map(function (p) {
-        return [p[1], p[0]];
-      });
-
-      line.setLatLngs(road).setStyle({ dashArray: null, weight: 5 });
-      map.fitBounds(line.getBounds(), { padding: [40, 40], maxZoom: 16 });
-
-      info.textContent = formatKm(route.distance) + ' · ~' +
-        Math.max(1, Math.round(route.duration / 60)) + ' min by road';
-
-      return '';
     })
     .catch(function () {
       // keep the straight line
@@ -469,8 +480,9 @@ function distanceToRoad(lat, lng) {
 }
 
 
+// answers [is it in the water, metres to the nearest road], and doesn't ask twice.
 // if a service doesn't answer we can't tell, so that check doesn't block the order
-function pointProblem(name, lat, lng) {
+function pointCheck(lat, lng) {
 
   const key = lat + ',' + lng;
 
@@ -481,13 +493,7 @@ function pointProblem(name, lat, lng) {
     ]);
   }
 
-  return deliveryCache[key].then(function (answers) {
-    if (answers[0]) return name + ' is in the water. Choose a point on land.';
-    if (answers[1] > MAX_ROAD_DISTANCE) {
-      return name + ' is more than ' + MAX_ROAD_DISTANCE + ' m from any road, so a courier can\'t reach it.';
-    }
-    return '';
-  });
+  return deliveryCache[key];
 }
 
 
@@ -594,7 +600,14 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
     if (empty) {
       msg.textContent = name + 'Please complete all required fields.';
       msg.className = 'msg error';
-      document.querySelectorAll('.product')[i].querySelector('[data-field="' + empty + '"]').focus();
+      const block = document.querySelectorAll('.product')[i];
+      const select = block.querySelector('[data-field="category"]');
+
+      if (empty === 'category' && select.value === 'Other') {
+        block.querySelector('.category-other').focus();
+      } else {
+        block.querySelector('[data-field="' + empty + '"]').focus();
+      }
       return;
     }
 
@@ -724,6 +737,21 @@ function addProduct(values) {
     if (values) input.value = values[input.dataset.field];
   });
 
+  const category = block.querySelector('[data-field="category"]');
+  const other = block.querySelector('.category-other');
+
+  category.addEventListener('change', function () {
+    other.hidden = category.value !== 'Other';
+    if (!other.hidden) other.focus();
+  });
+
+  // a saved category that isn't in the list was written under Other
+  if (values && values.category && category.value !== values.category) {
+    category.value = 'Other';
+    other.value = values.category;
+    other.hidden = false;
+  }
+
   block.querySelector('.product-remove').addEventListener('click', function () {
     block.remove();
     updateProducts();
@@ -743,6 +771,10 @@ function readProducts() {
     productFields.forEach(function (field) {
       product[field] = block.querySelector('[data-field="' + field + '"]').value.trim();
     });
+
+    if (product.category === 'Other') {
+      product.category = block.querySelector('.category-other').value.trim();
+    }
 
     return product;
   });

@@ -66,6 +66,9 @@ main { padding: 32px 0 56px; }
   line-height: 1.5;
 }
 
+.member a { color: var(--blue); text-decoration: underline; }
+.member a:hover { color: var(--navy); }
+
 /* phone: one member per row */
 @media (max-width: 600px) {
   .team {

@@ -124,15 +124,9 @@
             </div>
           </div>
 
-          <div class="captcha" id="captcha">
-            <button class="captcha-box" type="button" id="captchaBox" role="checkbox"
-                    aria-checked="false" aria-labelledby="captchaLabel"></button>
-            <span class="captcha-label" id="captchaLabel">I'm not a robot</span>
-            <span class="captcha-brand">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-2.9 8.3-7 10-4.1-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
-              CMS Verify
-            </span>
-          </div>
+          <!-- Cloudflare Turnstile with its public test key: no account or server needed,
+               it always passes. The frame crops the "testing only" strip under the widget. -->
+          <div class="captcha-frame"><div id="captcha"></div></div>
 
           <button class="btn btn-primary btn-full" type="submit">Register</button>
           <p class="msg" id="registerMsg" role="alert" aria-live="polite"></p>
@@ -162,5 +156,6 @@
 <script src="../Assets/js/phone.js"></script>
 <script src="../Assets/js/store.js"></script>
 <script src="../Assets/js/login.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=renderCaptcha" async defer></script>
 </body>
 </html>

@@ -39,27 +39,20 @@ tabs.forEach(function (tab) {
 });
 
 
-// what the register form asks for depends on the role. Couriers and staff wait
-// for an approval, admin accounts can't be requested here.
+// what the register form asks for depends on the role: only clients don't wait
+// for an approval. Staff check couriers, admins check staff and other admins.
 const REGISTER_TEXT = {
   client: { title: 'Create Client Account', lead: 'You can log in right after.' },
   courier: { title: 'Request Courier Account', lead: 'Staff check your documents before you can log in.' },
-  staff: { title: 'Request Staff Account', lead: 'An admin approves your account before you can log in.' }
+  staff: { title: 'Request Staff Account', lead: 'An admin approves your account before you can log in.' },
+  admin: { title: 'Request Admin Account', lead: 'An existing admin approves your account before you can log in.' }
 };
 
 function updateRegisterPanel() {
 
   const text = REGISTER_TEXT[role];
 
-  document.getElementById('registerRow').hidden = !text;
   document.getElementById('registerMsg').textContent = '';
-
-  if (!text) {
-    registerPanel.hidden = true;
-    loginPanel.hidden = false;
-    return;
-  }
-
   document.getElementById('registerTitle').textContent = text.title;
   document.getElementById('registerLead').textContent = text.lead;
   document.getElementById('courierDocs').hidden = role !== 'courier';
@@ -73,6 +66,7 @@ document.getElementById('showRegister').addEventListener('click', function () {
   // hide login and show register form
   loginPanel.hidden = true;
   registerPanel.hidden = false;
+  renderCaptcha();
 });
 
 document.getElementById('showLogin').addEventListener('click', function () {
@@ -128,7 +122,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
   const account = cmsFindAccount(email);
 
   if (account && account.role !== role) {
-    msg.textContent = 'This email belongs to a ' + account.role + ' account. Use that tab.';
+    msg.textContent = 'This email is registered as ' + account.role + '. Use that tab.';
     msg.className = 'msg error';
     return;
   }
@@ -163,31 +157,31 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
 const phoneField = setupPhone(document.getElementById('registerPhone'));
 
 
-// captcha look only: pressing it always passes and nothing is saved.
-// A real one needs the server to verify it (Sprint 2).
-const captchaBox = document.getElementById('captchaBox');
-let captchaState = 'empty';
+// Turnstile only draws itself while visible, so it waits for the register form.
+// Nothing checks or saves the token: that needs a server.
+let captchaToken = '';
+let captchaWidget = null;
 
-captchaBox.addEventListener('click', function () {
+function renderCaptcha() {
 
-  if (captchaState !== 'empty') return;
+  if (!window.turnstile || captchaWidget !== null || registerPanel.hidden) return;
 
-  captchaState = 'checking';
-  captchaBox.classList.add('checking');
-  document.getElementById('registerMsg').textContent = '';
-
-  setTimeout(function () {
-    captchaState = 'checked';
-    captchaBox.classList.replace('checking', 'checked');
-    captchaBox.setAttribute('aria-checked', 'true');
-  }, 800);
-});
-
-function resetCaptcha() {
-  captchaState = 'empty';
-  captchaBox.classList.remove('checking', 'checked');
-  captchaBox.setAttribute('aria-checked', 'false');
+  captchaWidget = window.turnstile.render('#captcha', {
+    sitekey: '3x00000000000000000000FF',
+    theme: 'light',
+    // fixed language: longer translations change the layout and break the crop
+    language: 'en',
+    callback: function (token) {
+      captchaToken = token;
+      document.getElementById('registerMsg').textContent = '';
+    },
+    'expired-callback': function () {
+      captchaToken = '';
+    }
+  });
 }
+
+window.renderCaptcha = renderCaptcha;
 
 
 document.getElementById('registerForm').addEventListener('submit', function (e) {
@@ -247,7 +241,8 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     return;
   }
 
-  if (captchaState !== 'checked') {
+  // if Cloudflare's script couldn't load, the form still has to work
+  if (captchaWidget !== null && captchaToken === '') {
     msg.textContent = "Please confirm you're not a robot.";
     msg.className = 'msg error';
     return;
@@ -265,7 +260,8 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
   });
 
   this.reset();
-  resetCaptcha();
+  captchaToken = '';
+  if (captchaWidget !== null) window.turnstile.reset(captchaWidget);
 
   msg.textContent = role === 'client'
     ? 'Account created. You can log in now.'

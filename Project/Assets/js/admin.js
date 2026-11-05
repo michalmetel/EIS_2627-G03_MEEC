@@ -39,9 +39,9 @@ const DATA = {
   ]
 };
 
-// People who asked for a staff account on the register form
-cmsAccounts().filter(a => a.role === 'staff').forEach(a => DATA.approvals.push({
-  id: a.id, name: a.name, email: a.email, role: 'Staff', dateReceived: a.dateReceived
+// People who asked for a staff or admin account on the register form
+cmsAccounts().filter(a => a.role === 'staff' || a.role === 'admin').forEach(a => DATA.approvals.push({
+  id: a.id, name: a.name, email: a.email, role: a.role === 'staff' ? 'Staff' : 'Admin', dateReceived: a.dateReceived
 }));
 
 const STATUS_LABEL = { pending: 'Pending', approved: 'Approved', rejected: 'Rejected' };
@@ -238,7 +238,7 @@ function renderApprovals(){
   body.replaceChildren();
 
   if (!DATA.approvals.length){
-    body.append(el('tr', {}, el('td', { class: 'empty', colspan: '6' }, 'No pending staff approvals.')));
+    body.append(el('tr', {}, el('td', { class: 'empty', colspan: '6' }, 'No pending approvals.')));
     return;
   }
 

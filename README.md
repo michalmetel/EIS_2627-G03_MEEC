@@ -18,7 +18,7 @@ Options: `--port 9000` to choose another port, `--no-browser` to not open the br
 
 The Courier, Staff and Admin pages ask for a login first (`Project/Assets/js/auth.js`). The Client page is public and only asks for a login when an order is submitted; the order is kept and sent after the login. There is no backend yet, so any valid email with a password of 6+ characters is accepted, and the check only runs in the browser. It has to move to the server in the backend sprint.
 
-Until then `Project/Assets/js/store.js` keeps sample data in the browser's `localStorage`, so the pages work together: couriers and staff who register appear on the Staff and Admin pages and can log in once approved. New certificates alert Staff, and new orders can be tracked. Passwords, phones and NIFs are never stored.
+Until then `Project/Assets/js/store.js` keeps sample data in the browser's `localStorage`, so the pages work together: couriers who register appear on the Staff page, staff and admins on the Admin page, and they can log in once approved. New certificates alert Staff, and new orders can be tracked. Passwords, phones and NIFs are never stored.
 
 ## Styles
 

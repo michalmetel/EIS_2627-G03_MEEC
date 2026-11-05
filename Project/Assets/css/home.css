@@ -10,7 +10,7 @@
 /* Navbar search */
 .search{display:flex;align-items:center;gap:8px;color:var(--blue);border:1.5px solid var(--blue);border-radius:999px;padding:4px 14px;background:#fff}
 .search{position:relative}
-.search-msg{position:absolute;top:calc(100% + 6px);right:0;z-index:5;white-space:nowrap;font-size:.78rem;font-weight:700;color:var(--err)}
+.search-msg{position:absolute;top:calc(100% + 2px);right:0;z-index:5;white-space:nowrap;font-size:.78rem;font-weight:700;color:var(--err)}
 .search-msg:empty{display:none}
 .search input{border:0;outline:0;background:transparent;width:150px;font:inherit;font-size:.82rem;color:var(--ink)}
 
@@ -98,7 +98,7 @@
   .hero{grid-template-columns:minmax(0,1fr);padding:40px 0 28px;gap:28px}
   .track-card{max-width:none}
   .search{order:4;width:100%;margin-bottom:8px}.search{position:relative}
-.search-msg{position:absolute;top:calc(100% + 6px);right:0;z-index:5;white-space:nowrap;font-size:.78rem;font-weight:700;color:var(--err)}
+.search-msg{position:absolute;top:calc(100% + 2px);right:0;z-index:5;white-space:nowrap;font-size:.78rem;font-weight:700;color:var(--err)}
 .search-msg:empty{display:none}
 .search input{width:100%}
   .facts{grid-template-columns:1fr 1fr}

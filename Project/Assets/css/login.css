@@ -96,74 +96,26 @@
 
 #authTitle { margin-bottom: 22px; }
 
-/* "I'm not a robot" check on the register form */
-.captcha {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* 51px is where Cloudflare's "testing only" strip starts */
+.captcha-frame {
+  width: 300px;
+  height: 52px;
   margin-bottom: 16px;
-  padding: 12px 14px;
-  border: 1px solid #d3d3d3;
-  border-radius: 4px;
-  background: #f9f9f9;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+  overflow: hidden;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.captcha-box {
-  position: relative;
-  flex-shrink: 0;
-  width: 26px;
-  height: 26px;
-  border: 2px solid #c1c1c1;
-  border-radius: 3px;
-  background: #fff;
-  cursor: pointer;
+#captcha { width: 300px; }
+
+@media (max-width: 400px) {
+  .captcha-frame { width: 255px; height: 44px; }
+  #captcha { transform: scale(.85); transform-origin: left top; }
 }
 
-.captcha-box:hover { border-color: #b2b2b2; box-shadow: inset 0 0 4px rgba(0, 0, 0, .1); }
-
-.captcha-box.checking {
-  border: 3px solid #d6e2f5;
-  border-top-color: var(--blue);
-  border-radius: 50%;
-  background: none;
-  cursor: default;
-  animation: captcha-spin .7s linear infinite;
+@media (max-width: 350px) {
+  .captcha-frame { width: 225px; height: 39px; }
+  #captcha { transform: scale(.75); }
 }
-
-.captcha-box.checked {
-  border-color: transparent;
-  background: none;
-  cursor: default;
-}
-
-/* the green tick */
-.captcha-box.checked::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: -2px;
-  width: 10px;
-  height: 21px;
-  border: solid #0a9d58;
-  border-width: 0 4px 4px 0;
-  transform: rotate(42deg);
-}
-
-@keyframes captcha-spin { to { transform: rotate(360deg); } }
-
-.captcha-label { font-size: .92rem; color: var(--ink); }
-
-.captcha-brand {
-  display: grid;
-  justify-items: center;
-  margin-left: auto;
-  font-size: .62rem;
-  line-height: 1.3;
-  color: var(--muted);
-}
-
-.captcha-brand svg { width: 26px; height: 26px; color: var(--blue); }
 
 .lead {
   color: var(--muted);
