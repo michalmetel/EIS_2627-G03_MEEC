@@ -4,3 +4,6 @@ __pycache__/
 .vscode/
 nbproject/private/
 *.zip
+Project/config/config.php
+Project/uploads/
+.DS_Store
