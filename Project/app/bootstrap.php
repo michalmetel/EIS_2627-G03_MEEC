@@ -2,10 +2,18 @@
 // Include this file at the top of every API endpoint:
 // require_once __DIR__ . '/../app/bootstrap.php';
 
-require_once __DIR__ . '/Core/Database.php';
-require_once __DIR__ . '/Core/Response.php';
-require_once __DIR__ . '/Core/Auth.php';
-require_once __DIR__ . '/Core/Request.php';
+// Autoloader: when a class is used for the first time (e.g. UserRepository),
+// PHP looks for a file with the same name in Core/, DAL/ and BLL/ and loads it.
+// So a new class only needs a file named exactly like the class – no extra require.
+spl_autoload_register(function (string $class) {
+    foreach (['Core', 'DAL', 'BLL'] as $folder) {
+        $file = __DIR__ . '/' . $folder . '/' . $class . '.php';
+        if (file_exists($file)) {
+            require_once $file;
+            return;
+        }
+    }
+});
 
 $config = require __DIR__ . '/../config/config.php';
 

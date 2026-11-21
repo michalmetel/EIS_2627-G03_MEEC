@@ -2,6 +2,14 @@
 // Reading data sent by the frontend.
 class Request
 {
+    // Stops with 405 if the endpoint was called with a different HTTP method.
+    public static function requireMethod(string $method): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== $method) {
+            Response::error('Use ' . $method, 405);
+        }
+    }
+
     // fetch() with JSON body -> PHP array
     public static function json(): array
     {
