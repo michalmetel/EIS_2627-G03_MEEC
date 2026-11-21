@@ -118,39 +118,42 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     return;
   }
 
-  // no passwords to compare without a backend, only the sample accounts' status
-  const account = cmsFindAccount(email);
+  // email + password are checked by the server, in the database (api/login.php)
+  fetch('../api/login.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: password, role: role })
+  })
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (json) {
 
-  if (account && account.role !== role) {
-    msg.textContent = 'This email is registered as ' + account.role + '. Use that tab.';
-    msg.className = 'msg error';
-    return;
-  }
+      // wrong password, wrong tab, account waiting for approval...
+      // the server sends the message, we only show it
+      if (!json.ok) {
+        msg.textContent = json.error;
+        msg.className = 'msg error';
+        return;
+      }
 
-  if (account && account.status === 'rejected') {
-    msg.textContent = 'Your account request was not approved.';
-    msg.className = 'msg error';
-    return;
-  }
+      msg.textContent = 'Login successful.';
+      msg.className = 'msg success';
 
-  if (account && account.status !== 'approved') {
-    msg.textContent = 'Your account is still waiting for approval.';
-    msg.className = 'msg error';
-    return;
-  }
+      // still read by auth.js until it is switched to api/me.php
+      sessionStorage.setItem('cmsRole', json.data.role);
+      sessionStorage.setItem('cmsEmail', email.toLowerCase());
+      sessionStorage.setItem('cmsName', json.data.name);
 
-  // only frontend validation for sprint 1
-  msg.textContent = 'Login validated.';
-  msg.className = 'msg success';
-
-  // remembered until the tab is closed or the user logs out, auth.js reads it
-  sessionStorage.setItem('cmsRole', role);
-  sessionStorage.setItem('cmsEmail', email.toLowerCase());
-  sessionStorage.setItem('cmsName', account ? account.name : nameFromEmail(email));
-
-  setTimeout(function () {
-    window.location.href = rolePages[role];
-  }, 400);
+      setTimeout(function () {
+        window.location.href = rolePages[json.data.role];
+      }, 400);
+    })
+    .catch(function () {
+      // server not running or the answer was not JSON
+      msg.textContent = 'Cannot connect to the server. Please try again later.';
+      msg.className = 'msg error';
+    });
 });
 
 
@@ -268,14 +271,6 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     : 'Request sent. You can log in once it is approved.';
   msg.className = 'msg success';
 });
-
-
-// for people without a sample account: maria.silva@x.pt becomes Maria Silva
-function nameFromEmail(email) {
-  return email.split('@')[0].split(/[._-]+/).map(function (part) {
-    return part.charAt(0).toUpperCase() + part.slice(1);
-  }).join(' ');
-}
 
 
 function validEmail(email) {
