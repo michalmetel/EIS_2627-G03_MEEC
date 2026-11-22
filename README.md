@@ -23,3 +23,38 @@ Until then `Project/Assets/js/store.js` keeps sample data in the browser's `loca
 ## Styles
 
 Every page loads `Project/Assets/css/common.css` first (colours, background, top bar, navbar, footer), then its own stylesheet for what is specific to that page.
+
+## Database
+
+## 1. Set up your local database 
+ 
+1. Start **Apache** and **MySQL** in XAMPP.
+2. Copy `Project/config/config.example.php` to `Project/config/config.php` (never commit it).
+3. Open `http://localhost/phpmyadmin` → **Import** → choose `database/cms.sql` → **Go**.
+4. Check that the `cms` database now has `USER` and `PRICING_SETTINGS`.
+
+## 2. Which server to use
+ 
+The backend needs PHP, so **do not use `python run.py`** for anything that calls `api/`. It only serves
+static files and `POST` requests fail with `501 Unsupported method`.
+
+go to http://localhost/EIS_2627-G03_MEEC/Project/Pages/login.html or any other pages directly in the browser, it should work.
+
+If the repo is not inside `C:\xampp\htdocs`, create a folder link (PowerShell):
+
+```
+New-Item -ItemType Junction -Path "C:\xampp\htdocs\EIS_2627-G03_MEEC" -Target "<path to your repo>"
+```
+
+## 4. Test accounts
+ 
+Password for all of them: `password123`
+ 
+| Email | Role | Status |
+|---|---|---|
+| client@cms.pt | client | approved |
+| courier@cms.pt | courier | approved |
+| staff@cms.pt | staff | approved |
+| admin@cms.pt | admin | approved |
+| courier2@cms.pt | courier | pending (to test approvals) |
+| staff2@cms.pt | staff | pending (to test approvals) |
