@@ -1,0 +1,3 @@
+username;name;email;password;phone;nif;role;account_status
+ana.silva;Ana Silva;ana@cms.pt;password123;912345678;123456789;client;approved
+rui.costa;Rui Costa;rui@cms.pt;password123;;;courier;approved
