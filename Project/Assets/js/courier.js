@@ -302,7 +302,7 @@ function renderStatus(){
 }
 
 // Initiated -> In Progress (validates vehicle choice and capacity)
-$('stepProg').addEventListener('click', () => {
+$('stepProg').addEventListener('click', async () => {
   const v = selectedVehicle(), msg = $('statusMsg');
   hideMsg(msg);
   if (!v){
@@ -314,6 +314,11 @@ $('stepProg').addEventListener('click', () => {
     showMsg(msg, `This order doesn't fit in the ${v.model}. Pick a larger vehicle.`);
     return;
   }
+  if (activeOrder.fromServer){
+    // the server checks everything again (vehicle owner, approval, capacity)
+    const r = await apiPost('courier-order-status.php', { order_id:activeOrder.id, action:'start', vehicle_id:Number(v.id) });
+    if (!r.ok){ showMsg(msg, r.error); return; }
+  }
   activeOrder.status = 'in_progress';
   activeOrder.vehicle = v.id;
   renderStatus();
@@ -321,7 +326,7 @@ $('stepProg').addEventListener('click', () => {
 });
 
 // In Progress -> Completed (requires e-POD)
-$('stepDone').addEventListener('click', () => {
+$('stepDone').addEventListener('click', async () => {
   hideMsg($('statusMsg'));
   if (!pod){
     showMsg($('podMsg'), 'Proof of delivery is mandatory: save a signature or upload a photo first.');
@@ -329,6 +334,21 @@ $('stepDone').addEventListener('click', () => {
     return;
   }
   hideMsg($('podMsg'));
+  if (activeOrder.fromServer){
+    const form = new FormData();
+    form.append('order_id', activeOrder.id);
+    form.append('action', 'complete');
+    form.append('pod_type', pod.type);
+    const file = pod.type === 'photo'
+      ? pod.file
+      : await (await fetch(pod.data)).blob();          // signature canvas -> PNG file
+    form.append('file', file, pod.type === 'photo' ? pod.name : 'signature.png');
+
+    $('stepDone').disabled = true;
+    const r = await apiPost('courier-order-status.php', form);
+    $('stepDone').disabled = false;
+    if (!r.ok){ showMsg($('statusMsg'), r.error); return; }
+  }
   finishOrder('completed');
 });
 
@@ -348,7 +368,7 @@ function closeCancel(){
 $('cancelReason').addEventListener('input', e => {
   if (e.target.value.trim()){ e.target.classList.remove('invalid'); hideMsg($('cancelMsg')); }
 });
-$('cancelForm').addEventListener('submit', e => {
+$('cancelForm').addEventListener('submit', async e => {
   e.preventDefault();
   const reason = $('cancelReason').value.trim();
   if (!reason){
@@ -362,6 +382,10 @@ $('cancelForm').addEventListener('submit', e => {
     showMsg($('cancelMsg'), 'The reason is too short (at least 5 characters).');
     return;
   }
+  if (activeOrder.fromServer){
+    const r = await apiPost('courier-order-status.php', { order_id:activeOrder.id, action:'cancel', reason });
+    if (!r.ok){ showMsg($('cancelMsg'), r.error); return; }
+  }
   finishOrder('cancelled', reason);
 });
 
@@ -370,6 +394,9 @@ function finishOrder(status, reason){
   if (status === 'completed'){
     completed.unshift({ id:o.id, to:o.to, date:todayISO(), status:'completed', isNew:true });
     toast(`Order #${o.id} delivered – proof of delivery saved`);
+  } else if (o.fromServer){
+    // the server put it back in the dispatch queue for another courier
+    toast(`Order #${o.id} cancelled – it goes back to the dispatch queue`);
   } else {
     // Cancelled orders go back to the list of orders, with one more attempt counted
     const { status:_s, vehicle:_v, ...rest } = o;
@@ -380,6 +407,8 @@ function finishOrder(status, reason){
   resetPod();
   closeCancel();
   renderAll();
+  // another order of the same route may be waiting
+  if (o.fromServer) loadServerActiveOrder();
 }
 
 /* =========================================================
@@ -499,7 +528,7 @@ $('photoInput').addEventListener('change', e => {
   const reader = new FileReader();
   reader.onload = () => {
     $('photoDrop').innerHTML = `<img src="${reader.result}" alt="Delivery photo preview"><span>Tap to replace</span>`;
-    pod = { type:'photo', name:file.name };
+    pod = { type:'photo', name:file.name, file };
     $('podSaved').textContent = `✓ Photo attached (${file.name})`;
     toast('Delivery photo attached');
   };
@@ -570,8 +599,116 @@ $('docForm').addEventListener('submit', e => {
   renderVehicleMeta();
 });
 
+/* =========================================================
+   Active order from the backend (WP3: order accepted from an offer)
+   Replaces the sample active order when the server has one.
+   dispatch.js calls this right after the courier accepts.
+   ========================================================= */
+async function placeName(c){
+  try {
+    const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&zoom=17&lat=${c[0]}&lon=${c[1]}`);
+    const d = await r.json();
+    const a = d.address || {};
+    return a.road || a.suburb || a.city_district || a.town || a.city || coord(c);
+  } catch (e) { return coord(c); }
+}
+
+// GET helper for the courier endpoints: data, or undefined when there is no backend / no login
+async function apiGet(file){
+  try {
+    const res = await fetch('../api/' + file, { credentials:'same-origin' });
+    const json = await res.json();
+    return json.ok ? json.data : undefined;
+  } catch (e) { return undefined; }
+}
+
+// POST helper: JSON body, or FormData when a file is sent. Returns { ok, data, error }.
+async function apiPost(file, body){
+  try {
+    const isForm = body instanceof FormData;
+    const res = await fetch('../api/' + file, {
+      method:'POST', credentials:'same-origin',
+      headers: isForm ? {} : { 'Content-Type':'application/json' },
+      body: isForm ? body : JSON.stringify(body)
+    });
+    return await res.json();
+  } catch (e) {
+    return { ok:false, error:'Could not reach the server. Try again.' };
+  }
+}
+
+let backendMode = false;   // true once the server answered: sample data is no longer used
+
+async function loadServerVehicles(){
+  const list = await apiGet('courier-vehicles.php');
+  if (!list) return;
+  const far = '9999-12-31'; // no date in the database = does not expire
+  vehicles.splice(0, vehicles.length, ...list.map(v => ({
+    id:String(v.vehicle_id), model:v.model, plate:v.plate, type:v.type,
+    maxKg:v.max_kg, maxM3:v.max_m3,
+    insurance:v.insurance || far, inspection:v.inspection || far, approved:v.approved
+  })));
+  buildVehicleOptions();
+  renderVehicleMeta();
+}
+
+async function loadServerCompleted(){
+  const list = await apiGet('courier-completed.php');
+  if (!list) return;
+  completed = list.map(o => ({ id:o.order_id, to:coord(o.dest), date:o.delivered_at.slice(0, 10), status:'completed' }));
+  renderCompleted();
+}
+
+async function loadServerActiveOrder(){
+  let json;
+  try {
+    const res = await fetch('../api/courier-active-order.php', { credentials:'same-origin' });
+    json = await res.json();
+  } catch (e) { return; }               // no backend: keep the sample data
+  if (!json.ok) return;
+
+  if (!backendMode){
+    // Orders now arrive as offers (dispatch.js), so the sample queue goes away
+    backendMode = true;
+    queue = [];
+  }
+  if (!json.data){
+    activeOrder = null;
+    renderAll();
+    return;
+  }
+
+  const o = json.data;
+  if (activeOrder && activeOrder.id === o.order_id && activeOrder.fromServer) return;
+
+  activeOrder = {
+    id:o.order_id, fromServer:true, status:o.status, attempt:o.attempt,
+    origin:o.origin, dest:o.dest, from:coord(o.origin), to:coord(o.dest), products:o.products
+  };
+  resetPod();
+  if (o.status === 'initiated'){
+    $('vehicleSelect').value = '';
+    showMsg($('vehicleMsg'), 'Select a vehicle that can carry this order.', 'info');
+  } else {
+    $('vehicleSelect').value = String(o.vehicle_id);   // vehicle already chosen for this route
+    hideMsg($('vehicleMsg'));
+  }
+  renderVehicleMeta();
+  renderAll();
+
+  // nicer labels (street names) once OpenStreetMap answers
+  const [from, to] = await Promise.all([placeName(o.origin), placeName(o.dest)]);
+  if (activeOrder && activeOrder.id === o.order_id){
+    activeOrder.from = from; activeOrder.to = to;
+    renderStatus();
+  }
+}
+window.loadServerActiveOrder = loadServerActiveOrder;
+
 buildVehicleOptions();
 renderVehicleMeta();
 renderAll();
 sizePad();
 window.addEventListener('load', initMap);
+loadServerVehicles().then(loadServerActiveOrder);
+loadServerCompleted();
