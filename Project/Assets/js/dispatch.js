@@ -59,8 +59,8 @@
 
   async function drawMap(o){
     if (!offerMap){
-      offerMap = L.map('offerMap', { zoomControl:false, dragging:false, scrollWheelZoom:false,
-                                     doubleClickZoom:false, touchZoom:false, keyboard:false });
+      // drag, scroll-wheel and pinch to explore the route
+      offerMap = L.map('offerMap', { zoomControl:true });
       offerMap.attributionControl.setPrefix(false);
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom:19, attribution:'&copy; OpenStreetMap'

@@ -161,7 +161,7 @@ const phoneField = setupPhone(document.getElementById('registerPhone'));
 
 
 // Turnstile only draws itself while visible, so it waits for the register form.
-// Nothing checks or saves the token: that needs a server.
+// The token is checked by the server (api/captcha-verify.php) before the account is saved.
 let captchaToken = '';
 let captchaWidget = null;
 
@@ -172,7 +172,7 @@ function renderCaptcha() {
   captchaWidget = window.turnstile.render('#captcha', {
     sitekey: '3x00000000000000000000FF',
     theme: 'light',
-    // fixed language: longer translations change the layout and break the crop
+    // same language as the rest of the site
     language: 'en',
     callback: function (token) {
       captchaToken = token;
@@ -251,25 +251,64 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     return;
   }
 
-  // only what the other pages show: not the password, phone or NIF
-  cmsAddAccount({
-    id: 'account-' + Date.now(),
-    name: name,
-    email: email.toLowerCase(),
-    role: role,
-    status: role === 'client' ? 'approved' : 'pending',
-    dateReceived: new Date().toISOString().slice(0, 10),
-    documents: role === 'courier' ? ['ID card', 'Criminal record'] : []
-  });
+  const form = this;
+  const button = form.querySelector('button[type="submit"]');
 
-  this.reset();
-  captchaToken = '';
-  if (captchaWidget !== null) window.turnstile.reset(captchaWidget);
+  function saveAccount() {
+    // only what the other pages show: not the password, phone or NIF
+    cmsAddAccount({
+      id: 'account-' + Date.now(),
+      name: name,
+      email: email.toLowerCase(),
+      role: role,
+      status: role === 'client' ? 'approved' : 'pending',
+      dateReceived: new Date().toISOString().slice(0, 10),
+      documents: role === 'courier' ? ['ID card', 'Criminal record'] : []
+    });
 
-  msg.textContent = role === 'client'
-    ? 'Account created. You can log in now.'
-    : 'Request sent. You can log in once it is approved.';
-  msg.className = 'msg success';
+    form.reset();
+    msg.textContent = role === 'client'
+      ? 'Account created. You can log in now.'
+      : 'Request sent. You can log in once it is approved.';
+    msg.className = 'msg success';
+  }
+
+  // a token works only once, so the widget always gets a fresh one afterwards
+  function resetCaptcha() {
+    captchaToken = '';
+    if (captchaWidget !== null) window.turnstile.reset(captchaWidget);
+  }
+
+  // Cloudflare's script did not load: nothing to verify
+  if (captchaWidget === null) {
+    saveAccount();
+    return;
+  }
+
+  // the server asks Cloudflare if the token is real (api/captcha-verify.php)
+  button.disabled = true;
+  fetch('../api/captcha-verify.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: captchaToken })
+  })
+    .then(function (res) { return res.json(); })
+    .then(function (json) {
+      if (json.ok) {
+        saveAccount();
+      } else {
+        msg.textContent = json.error;
+        msg.className = 'msg error';
+      }
+    })
+    .catch(function () {
+      msg.textContent = 'Could not reach the server to check the captcha. Try again.';
+      msg.className = 'msg error';
+    })
+    .finally(function () {
+      button.disabled = false;
+      resetCaptcha();
+    });
 });
 
 

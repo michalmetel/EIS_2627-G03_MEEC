@@ -23,7 +23,10 @@
 
 .offer-card {
   position: relative;
-  width: min(460px, 100%);
+  width: min(640px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
   background: var(--offer-bg);
   color: #fff;
   border-radius: 24px 24px 0 0;
@@ -48,8 +51,10 @@
 .offer-sheet.urgent .offer-drain span { background: var(--offer-urgent); }
 
 /* map */
-.offer-map-wrap { position: relative; }
-#offerMap { height: 210px; background: #dde8f5; }
+/* the map takes the free space: big on a laptop, still usable on a phone */
+.offer-map-wrap { position: relative; flex: 1 1 auto; min-height: 220px; }
+#offerMap { height: min(52vh, 460px); min-height: 220px; background: #dde8f5; }
+#offerMap .leaflet-control-zoom { margin: 12px; border: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, .3); }
 .offer-map-wrap::after {          /* soft fade from the map into the card */
   content: "";
   position: absolute;
@@ -72,7 +77,7 @@
 }
 .offer-map-note:empty { display: none; }
 
-.offer-body { padding: 6px 20px 22px; }
+.offer-body { padding: 6px 24px 24px; flex: none; }
 
 .offer-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .offer-kicker {
@@ -103,7 +108,6 @@
   width: 92px; height: 92px;
   flex: none;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, .07) 0 55%, transparent 56%);
 }
 .offer-timer svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
 .offer-timer circle { fill: none; stroke-width: 7; }
@@ -112,8 +116,7 @@
   stroke: var(--accent);
   stroke-linecap: round;
   stroke-dasharray: 263.89; /* 2 * PI * 42 */
-  filter: drop-shadow(0 0 6px rgba(242, 183, 5, .55));
-  transition: stroke-dashoffset .2s linear, stroke .3s, filter .3s;
+  transition: stroke-dashoffset .2s linear, stroke .3s;
 }
 .offer-secs {
   position: absolute;
@@ -127,7 +130,7 @@
 .offer-secs b { font-size: 1.9rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .offer-secs small { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--offer-text-2); margin-top: 3px; }
 
-.offer-sheet.urgent #offerRing { stroke: var(--offer-urgent); filter: drop-shadow(0 0 8px rgba(255, 93, 93, .7)); }
+.offer-sheet.urgent #offerRing { stroke: var(--offer-urgent); }
 .offer-sheet.urgent .offer-timer { animation: offer-beat 1s ease-in-out infinite; }
 .offer-sheet.urgent .offer-secs b { color: var(--offer-urgent); }
 @keyframes offer-beat { 50% { transform: scale(1.06); } }

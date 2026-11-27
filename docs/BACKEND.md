@@ -94,6 +94,30 @@ if (json.ok) { /* use json.data */ } else { alert(json.error); }
 
 Endpoints already done: `login.php` (POST), `logout.php` (POST), `me.php` (GET), `dev-login.php` (GET).
 
+**WP3 – dispatch queue** (`DispatchService` / `DispatchRepository`, table `DISPATCH_OFFER`):
+- `GET dispatch-offer.php` (courier) – the offer the courier must answer now, or `null`. Each call also moves the queue forward (expires old offers, offers waiting orders to the nearest courier).
+- `POST dispatch-respond.php` (courier) – `{ "offer_id": 1, "action": "accept" | "decline" }`.
+- Courier location = drop-off of their last completed delivery; FEUP if they have none. Offers last 60 s; a courier who declined can get the same order again after 5 min.
+- **WP1:** after a payment succeeds and the order becomes `pending`, call `DispatchService::run();` so the first offer goes out immediately.
+- Test orders: `http://localhost:8000/tests/new_order.php?from=maia&to=feup` (debug only, delete before submission).
+
+**Captcha (Cloudflare Turnstile)** – `CaptchaService::verify($token)`:
+- `POST captcha-verify.php` `{ "token": "..." }` – the register form calls it before saving the account.
+- Uses `turnstile_secret` from `config.php` (add the line from `config.example.php`; without it the public test secret is used).
+- **Whoever builds `register.php`:** call `CaptchaService::verify()` there before creating the user, and drop the separate call from `login.js` – a token works only once.
+
+**Courier cockpit** (`CourierService` / `CourierRepository`), all courier-only:
+- `GET courier-vehicles.php` – the courier's vehicles (`usable` = approved + documents valid).
+- `GET courier-active-order.php` – order being worked on, or `null`.
+- `GET courier-completed.php` – last 10 deliveries.
+- `POST courier-order-status.php`
+  - `{ "order_id", "action": "start", "vehicle_id" }` – initiated → in_progress (vehicle must be the courier's, usable and big enough)
+  - form data `order_id, action=complete, pod_type=signature|photo, file` – in_progress → completed. Image saved in `Project/uploads/pod/`.
+  - `{ "order_id", "action": "cancel", "reason" }` – in_progress → cancelled → back to `pending` (attempt + 1) for the dispatch queue.
+- Every change is logged in `ORDER_STATUS_HISTORY`.
+- **WP4** (real weight at pickup): add your check in `CourierService::start()` at the `WP4` comment.
+- **WP5** (delivery code): add your check in `CourierService::complete()` at the `WP5` comment, and send the code from `courier.js` in the same form data.
+
 ## 6. Test accounts
 
 Password for all: `password123`

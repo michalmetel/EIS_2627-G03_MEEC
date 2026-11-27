@@ -96,24 +96,23 @@
 
 #authTitle { margin-bottom: 22px; }
 
-/* 51px is where Cloudflare's "testing only" strip starts */
+/* Whole Turnstile widget (300 x 65 px), nothing cropped */
 .captcha-frame {
   width: 300px;
-  height: 52px;
+  min-height: 65px;
   margin-bottom: 16px;
-  overflow: hidden;
-  border-bottom: 1px solid #e0e0e0;
 }
 
 #captcha { width: 300px; }
 
+/* Small phones: the widget is scaled down, the frame shrinks to the scaled size */
 @media (max-width: 400px) {
-  .captcha-frame { width: 255px; height: 44px; }
+  .captcha-frame { width: 255px; min-height: 0; height: 56px; }
   #captcha { transform: scale(.85); transform-origin: left top; }
 }
 
 @media (max-width: 350px) {
-  .captcha-frame { width: 225px; height: 39px; }
+  .captcha-frame { width: 225px; height: 49px; }
   #captcha { transform: scale(.75); }
 }
 
