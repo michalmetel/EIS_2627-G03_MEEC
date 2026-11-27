@@ -170,7 +170,7 @@ function renderCaptcha() {
   if (!window.turnstile || captchaWidget !== null || registerPanel.hidden) return;
 
   captchaWidget = window.turnstile.render('#captcha', {
-    sitekey: '3x00000000000000000000FF',
+    sitekey: '0x4AAAAAAGVPeC3LM0bUQa2r',
     theme: 'light',
     // same language as the rest of the site
     language: 'en',

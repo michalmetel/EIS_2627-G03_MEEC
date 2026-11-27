@@ -103,7 +103,7 @@ Endpoints already done: `login.php` (POST), `logout.php` (POST), `me.php` (GET),
 
 **Captcha (Cloudflare Turnstile)** – `CaptchaService::verify($token)`:
 - `POST captcha-verify.php` `{ "token": "..." }` – the register form calls it before saving the account.
-- Uses `turnstile_secret` from `config.php` (add the line from `config.example.php`; without it the public test secret is used).
+- Uses `turnstile_secret` from `config.php` (same as `config.example.php`; if the line is missing the team secret is used anyway). Widget hostnames: `localhost`, `127.0.0.1`.
 - **Whoever builds `register.php`:** call `CaptchaService::verify()` there before creating the user, and drop the separate call from `login.js` – a token works only once.
 
 **Courier cockpit** (`CourierService` / `CourierRepository`), all courier-only:

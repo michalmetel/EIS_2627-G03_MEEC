@@ -8,7 +8,7 @@ class CaptchaService
 {
     const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
     const TIMEOUT_SECONDS = 5;
-    const TEST_SECRET = '1x0000000000000000000000000000000AA'; // Cloudflare's public test secret
+    const DEFAULT_SECRET = '0x4AAAAAAGVPeGO4LZDfdHVrnhtSzkjtwBQ'; // team widget (same as config.example.php)
 
     // true = human confirmed. Never throws: any problem counts as "not verified".
     public static function verify(string $token, ?string $ip = null): bool
@@ -17,8 +17,8 @@ class CaptchaService
             return false;
         }
         $config = require __DIR__ . '/../../config/config.php';
-        // Older config.php files have no key yet: use Cloudflare's test secret (matches the test site key)
-        $secret = $config['turnstile_secret'] ?? self::TEST_SECRET;
+        // Older config.php files have no key yet: use the team widget's secret
+        $secret = $config['turnstile_secret'] ?? self::DEFAULT_SECRET;
 
         $fields = ['secret' => $secret, 'response' => $token];
         if ($ip !== null) {
