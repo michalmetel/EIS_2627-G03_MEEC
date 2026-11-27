@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="../Assets/css/common.css">
 <link rel="stylesheet" href="../Assets/css/courier.css">
+<link rel="stylesheet" href="../Assets/css/dispatch.css">
 </head>
 <body>
 
@@ -215,8 +216,55 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- WP3: incoming delivery offer (filled by dispatch.js) -->
+<div class="offer-sheet" id="offerSheet" role="dialog" aria-modal="true" aria-labelledby="offerKicker" hidden>
+  <div class="offer-card">
+    <div class="offer-drain" aria-hidden="true"><span id="offerDrain"></span></div>
+    <div class="offer-map-wrap">
+      <div id="offerMap" aria-hidden="true"></div>
+      <span class="offer-map-note" id="offerMapNote">Loading route…</span>
+    </div>
+    <div class="offer-body">
+      <div class="offer-top">
+        <div>
+          <div class="offer-kicker" id="offerKicker"><span class="offer-live" aria-hidden="true"></span>New delivery request</div>
+          <div class="offer-price" id="offerPrice">€0.00</div>
+          <div class="offer-order">Order <span id="offerOrder"></span> · <span id="offerLoad"></span></div>
+        </div>
+        <div class="offer-timer" id="offerTimer" role="timer" aria-label="Seconds left to answer">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="track" cx="50" cy="50" r="42"></circle>
+            <circle id="offerRing" cx="50" cy="50" r="42"></circle>
+          </svg>
+          <div class="offer-secs"><b id="offerSecs">60</b><small>sec</small></div>
+        </div>
+      </div>
+
+      <ol class="offer-stops">
+        <li class="stop pick">
+          <span class="stop-dot" aria-hidden="true"></span>
+          <div><b>Pickup</b> <span id="offerPickName">—</span></div>
+          <span class="stop-meta" id="offerPickup"></span>
+        </li>
+        <li class="stop drop">
+          <span class="stop-dot" aria-hidden="true"></span>
+          <div><b>Drop-off</b> <span id="offerDropName">—</span></div>
+          <span class="stop-meta" id="offerTrip"></span>
+        </li>
+      </ol>
+      <div class="offer-from" id="offerFrom"></div>
+      <p class="offer-msg" id="offerMsg" role="alert"></p>
+      <div class="offer-actions">
+        <button type="button" id="offerDecline">Decline</button>
+        <button type="button" id="offerAccept">Accept</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="../Assets/js/store.js"></script>
 <script src="../Assets/js/courier.js"></script>
+<script src="../Assets/js/dispatch.js"></script>
 </body>
 </html>
